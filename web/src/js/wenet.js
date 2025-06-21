@@ -4,7 +4,6 @@ import { Demodulator } from "@jtarrio/webrtlsdr/demod/demodulator";
 import { ComplexDownsampler } from "@jtarrio/webrtlsdr/dsp/resamplers";
 import { concatenateReceivers } from "@jtarrio/webrtlsdr/radio/sample_receiver"
 
-const rtl_sdr_rate = 921416;
 var axis_mapping = [];
 
 var last_callsign;
@@ -153,10 +152,29 @@ var rtl
 
 var last_sent
 
+function getSampleRate(){
+    if (document.getElementById("wenet_version").value == '1') {
+        return 921416;
+    } else if (document.getElementById("wenet_version").value == '2') {
+        return 960000;
+    }
+    throw "Invalid Wenet version"
+}
+
+function getBaudRate(){
+    if (document.getElementById("wenet_version").value == '1') {
+        return 115177;
+    } else if (document.getElementById("wenet_version").value == '2') {
+        return 96000;
+    }
+    throw "Invalid Wenet version"
+}
+
 function start_wenet() {
     globalThis.spectrum_layout.shapes = []
 
     worker = new Worker(new URL('./wenet-worker.js', import.meta.url), { type: "module" });
+
     if (globalThis.audioContext) {
         globalThis.audioContext.suspend() // stop any running audio
     }
@@ -166,9 +184,29 @@ function start_wenet() {
 
     document.getElementById("alert").textContent = ""
     
+   
 
 
     worker.onmessage = function (event) {
+        if (event.data.type == "start") {
+            console.log("wenet worker loaded - sending config")
+            if (document.getElementById("wenet_version").value == "2"){
+                var rs232_frame = false
+                log_entry("Starting wenet in i2s mode")
+            } else {
+                var rs232_frame = true
+                log_entry("Starting wenet in rs232 mode")
+            }
+            
+
+            worker.postMessage({
+                "config": {
+                    "rs232_framing": rs232_frame,
+                    "samplerate": getSampleRate()
+                }
+            });
+            return
+        }
         if (event.data.type == "image") {
             addImage(...event.data.args)
             return
@@ -203,7 +241,7 @@ function start_wenet() {
             const fft = event.data.fft
             const spectrum_data = {
                 y: [fft], 
-                x: [[...Array(fft.length).keys()].map(x => ((x * (rtl_sdr_rate / 2 / fft.length)) + (rtl.getFrequency())) / 1000 / 1000)]
+                x: [[...Array(fft.length).keys()].map(x => ((x * (getSampleRate() / 2 / fft.length)) + (rtl.getFrequency())) / 1000 / 1000)]
             };
             globalThis.Plotly.update('spectrum',
                 spectrum_data, globalThis.spectrum_layout
@@ -306,7 +344,8 @@ function start_wenet() {
                 worker.postMessage({
                     "buffer": buffer,
                     "time": last_sent,
-                    "sh": sh
+                    "sh": sh,
+                    "freq": rtl.getFrequency()
                 })
             }
 
@@ -322,7 +361,7 @@ function start_wenet() {
         rtl = new Radio(
             new RTL2832U_Provider(),
             new wenet(),
-            rtl_sdr_rate, // sample rate
+            getSampleRate(), // sample rate
         )
 
         rtl.addEventListener("radio", (e) => console.log(e.detail.exception));
@@ -387,7 +426,7 @@ document.getElementById("ppm").addEventListener("change",()=>{
 })
 
 function rtlFreq() {
-    const rtl_freq = (document.getElementById("rtl_freq").value * 1000000) - (115177 * (8/4 - 0.25)/1)
+    const rtl_freq = (document.getElementById("rtl_freq").value * 1000000) - (getBaudRate() * (8/4 - 0.25)/1)
     
     
     if (rtl) {
@@ -416,5 +455,7 @@ function stop_wenet() {
     }
 
 }
+
+
 
 export { start_wenet, stop_wenet }

@@ -114,6 +114,7 @@ globalThis.saveSettings = function () {
         localStorage.setItem("ppm", document.getElementById("ppm").value)
         localStorage.setItem("radio", document.querySelector('input[name="radioType"]:checked').value)
         localStorage.setItem("rtlaudio", document.getElementById("rtlaudio").checked)
+        localStorage.setItem("wenet_version", document.getElementById("wenet_version").value)
         log_entry(`Saved settings`, "light")
         report_position()
     }
@@ -135,7 +136,7 @@ globalThis.loadSettings = function () {
     if (localStorage.getItem("ppm")) { document.getElementById("ppm").value = localStorage.getItem("ppm") }
     if (localStorage.getItem("rtlaudio")) { document.getElementById("rtlaudio").checked = (localStorage.getItem("rtlaudio") == 'true') }
     if (localStorage.getItem("rtlbiast")) { document.getElementById("rtlbiast").checked = (localStorage.getItem("rtlbiast") == 'true') }
-
+    if (localStorage.getItem("wenet_version")) {document.getElementById("wenet_version").value = localStorage.getItem("wenet_version") }
     
     if (localStorage.getItem("radio")) {
         const radio = localStorage.getItem("radio");
@@ -634,11 +635,13 @@ globalThis.updateRadio = function () {
 
     if (document.getElementById("radioWenet").checked){
         document.getElementById("rtlaudio").setAttribute("disabled", "disabled")
-        document.getElementById("tone_spacing").parentElement.classList.add("d-none")
+        document.getElementById("horusSection").classList.add("d-none")
+        document.getElementById("wenetSection").classList.remove("d-none")
         globalThis.setPageTitle("webwenet")
     } else {
+        document.getElementById("wenetSection").classList.add("d-none")
+        document.getElementById("horusSection").classList.remove("d-none")
         document.getElementById("rtlaudio").removeAttribute("disabled")
-        document.getElementById("tone_spacing").parentElement.classList.remove("d-none")
         globalThis.setPageTitle("webhorus")
     }
 
@@ -1114,6 +1117,11 @@ if (navigator.usb) {
     }
 } 
 
+
+globalThis.update_wenet = function(){
+    updateRadio();
+    start_wenet();
+}
 
 globalThis.loadSettings();
 settings_loaded = true

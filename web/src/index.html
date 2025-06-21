@@ -197,15 +197,6 @@
 
                                 <div class="col-md-4">
                                     <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="tone_spacing">Tone
-                                            Spacing</label>
-                                        <input class="form-control" id="tone_spacing" placeholder=""
-                                            onchange="updateToneSpacing()" type="number" inputmode="decimal"
-                                            value="270">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
                                         <label class="form-label col-form-label" for="tone_spacing">Radio</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="radioType"
@@ -355,6 +346,55 @@
                                         </div>
                                     </div>
                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item" id="horusSection">
+                        <h2 class="accordion-header" id="headingHorus">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseHorus" aria-expanded="false" aria-controls="collapseHorus">
+                                Horus Binary Configuration
+                            </button>
+                        </h2>
+                        <div id="collapseHorus" class="accordion-collapse collapse" aria-labelledby="headingHorus"
+                            data-bs-parent="#configAccordion">
+                            <div class="accordion-body row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="col mb-2">
+                                        <label class="form-label col-form-label" for="tone_spacing">Tone
+                                            Spacing</label>
+                                        <input class="form-control" id="tone_spacing" placeholder=""
+                                            onchange="updateToneSpacing()" type="number" inputmode="decimal"
+                                            value="270">
+                                    </div>
+                                </div>
+                                   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item" id="wenetSection">
+                        <h2 class="accordion-header" id="headingWenet">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseWenet" aria-expanded="false" aria-controls="collapseWenet">
+                                Wenet Configuration
+                            </button>
+                        </h2>
+                        <div id="collapseWenet" class="accordion-collapse collapse" aria-labelledby="headingWenet"
+                            data-bs-parent="#configAccordion">
+                            <div class="accordion-body row align-items-center">
+                               <div class="col-md-4">                                     
+                                    <div class="col mb-2">
+                                         <label class="form-label col-form-label" for="wenet_version">Wenet Version</label>
+                                            <select id="wenet_version" class="form-select" aria-label="Wenet mode" onchange="saveSettings();update_wenet();">
+                                                <option value="1" selected>Wenet Traditional (115177 UART)</option>
+                                                <option value="2">Wenet v2 (96000 I2S)</option>
+                                            </select>
+                                            <div id="passwordHelpBlock" class="form-text">
+                                            If unsure or unknown select "Wenet Traditional"
+                                            </div>
+                                            
+                                    </div>
                                 </div>
                             </div>
                         </div>
