@@ -17,14 +17,21 @@ def show_image(image_output):
 def gps(data):
     print(data)
 
+
+# rtl_sdr -f 443300000 -s 960000 -g 1 - | csdr convert_u8_f > ~/Downloads/test2.bin
+
 wenet = Wenet(
-    partialupdate=50
+    960000, partialupdate=50, rs232_framing=False
     )
 
-with open("/Users/mwheeler/Downloads/wenet_921416_threshold_decode.f32","rb") as f:
+#wenet = Wenet()
+
+#with open("/Users/mwheeler/Downloads/wenet_921416_threshold_decode.f32","rb") as f:
+with open("/Users/mwheeler/Downloads/test2.bin","rb") as f:
     while data := f.read(wenet.nin*2*4):
         output = wenet.write(data)
         if output:
-            print(data)
-        
-
+            if output:
+                print(output[0])
+                if output[0] == 'image':
+                    show_image(output[1][0])

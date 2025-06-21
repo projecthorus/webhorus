@@ -6,9 +6,14 @@ from rx.WenetPackets import WENET_PACKET_TYPES, packet_to_string, ssdv_packet_in
 import traceback
 import base64
 class Wenet():
-    def __init__(self, samplerate=115177*8, partialupdate=1):
-        print(samplerate)
-        self.wenet = Modem(samplerate)
+    def __init__(self, samplerate=115177*8, partialupdate=1, rs232_framing=True):
+        logging.debug(f"Sample rate: {samplerate}")
+        if rs232_framing:
+            self.wenet = Modem(samplerate)
+        else:
+            logging.debug("Starting modem for i2s")
+            self.wenet = Modem(samplerate,96000,rs232_framing=False)
+            
         self.current_image = -1
         self.current_callsign = ""
         self.current_text_message = -1

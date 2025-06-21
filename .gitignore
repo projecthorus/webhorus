@@ -6,9 +6,11 @@ emsdk
 .DS_Store
 payload_id_list.txt
 custom_field_list.json
+setup.py
 web/webhorus-*
 webhorus/setup.py
 web/src/dev-dist
+.vscode/
 
 web/.yarn/*
 .yarn/*
