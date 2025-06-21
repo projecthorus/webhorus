@@ -31,6 +31,7 @@ var sh_config
 var gps_data = []
 
 var samplerate
+var baudrate
 var rs232_framing
 
 self.onmessage = async (event) => {
@@ -38,6 +39,7 @@ self.onmessage = async (event) => {
     if ("config" in event.data) {
         self.samplerate = event.data.config.samplerate
         self.rs232_framing = event.data.config.rs232_framing
+        self.baudrate = event.data.config.baudrate
         pyodide.runPython(`
             from js import postMessage
             from js import self
@@ -48,6 +50,7 @@ self.onmessage = async (event) => {
             logging.getLogger().setLevel(logging.INFO)
             wenet = Wenet(
                 samplerate=self.samplerate,
+                baudrate=self.baudrate,
                 rs232_framing=self.rs232_framing,
                 partialupdate=25,
                 )
@@ -138,7 +141,7 @@ const sh_upload = setInterval(() => {
                 }
 
                 if (f_est){
-                    sh_payload.frequency = ((freq+f_est[0]+f_est[1]/2)/1000/1000)
+                    sh_payload.frequency = ((((freq  + f_est[0]) + (freq  + f_est[1]))/2)/1000/1000)
                 }
                 sh_payload.ascent_rate = +gps_data['ascent_rate'].toFixed(1)
                 sh_payload.speed = +gps_data['ground_speed'].toFixed(1)

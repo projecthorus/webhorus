@@ -202,7 +202,8 @@ function start_wenet() {
             worker.postMessage({
                 "config": {
                     "rs232_framing": rs232_frame,
-                    "samplerate": getSampleRate()
+                    "samplerate": getSampleRate(),
+                    "baudrate": getBaudRate()
                 }
             });
             return
