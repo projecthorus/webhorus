@@ -21,7 +21,7 @@ await Promise.all([
     pyodide.loadPackage("../assets/six-1.16.0-py2.py3-none-any.whl"),
     pyodide.loadPackage("../assets/urllib3-2.2.3-py3-none-any.whl"),
     pyodide.loadPackage("../assets/certifi-2024.12.14-py3-none-any.whl"),
-    pyodide.loadPackage("../assets/webhorus-0.2.0-cp312-cp312-pyodide_2024_0_wasm32.whl")
+    pyodide.loadPackage("../assets/webhorus-0.2.1-cp312-cp312-pyodide_2024_0_wasm32.whl")
 ])
 
 var freq = 0;
@@ -62,6 +62,11 @@ self.onmessage = async (event) => {
                 rs232_framing=self.rs232_framing,
                 partialupdate=25,
                 )
+            
+            # hack to work around horus launch 67 noise issues
+            from pywenet.modem import fsk_set_est_limits
+            fsk_set_est_limits(wenet.wenet.fsk,int(self.baudrate/4),int(self.samplerate*0.35))
+
             buffer = b''
             def write_wenet(audio):
                 global buffer

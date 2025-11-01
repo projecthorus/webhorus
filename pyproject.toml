@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "webhorus"
-version = "0.2.0"
+version = "0.2.1"
 description = ""
 authors = ["xssfox <xss@sprocketfox.io>"]
 readme = "README.md"
