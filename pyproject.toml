@@ -12,6 +12,7 @@ packages = [
     { include = "pywenet", from="."},
     { include = "crcmod", from="."},
     { include = "horusdemodlib", from="horusdemodlib"},
+    { include = "horusbinaryv3", from="horusdemodlib"},
     { include = "rx", from="wenet"},
    
 ]
