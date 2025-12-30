@@ -260,7 +260,7 @@ globalThis.addFrame = function (data) {
                 geoLink.href = `geo:${data["latitude"]},${data["longitude"]}`
                 fieldValue.appendChild(geoLink)
             } else {
-                if (field_name == "payload_id") {
+                if (field_name == "payload_id" || typeof data[field_name] != "number") {
                     fieldValue.innerText = data[field_name]
                 } else {
                     fieldValue.innerText = toFixedIfNecessary(parseFloat(data[field_name]), 4)
@@ -398,22 +398,24 @@ function updatePlots(data) {
 
 
     for (let field_name of data.packet_format.fields.map((x) => x[0]).concat(data.custom_field_names)) {
-        if (field_name != "custom" &&
-            field_name != "checksum" &&
-            field_name != "sequence_number" &&
-            field_name != "time" &&
-            field_name != "payload_id" &&
-            field_name != "longitude" &&
-            field_name != "latitude"
-        ) {
-            var field_name_payload = field_name + "[" + data.payload_id + "]"
-            if (!(axis_mapping.includes(field_name_payload))) {
-                axis_mapping.push(field_name_payload)
-                globalThis.Plotly.addTraces('plots', { y: [], x: [], name: field_name_payload, mode: 'lines' })
+        if (typeof data[field_name] === "number"){
+            if (field_name != "custom" &&
+                field_name != "checksum" &&
+                field_name != "sequence_number" &&
+                field_name != "time" &&
+                field_name != "payload_id" &&
+                field_name != "longitude" &&
+                field_name != "latitude"
+            ) {
+                var field_name_payload = field_name + "[" + data.payload_id + "]"
+                if (!(axis_mapping.includes(field_name_payload))) {
+                    axis_mapping.push(field_name_payload)
+                    globalThis.Plotly.addTraces('plots', { y: [], x: [], name: field_name_payload, mode: 'lines' })
+                }
+                var axis_id = axis_mapping.indexOf(field_name_payload)
+                axis_ids.push(axis_id)
+                plot_data.push([data[field_name]])
             }
-            var axis_id = axis_mapping.indexOf(field_name_payload)
-            axis_ids.push(axis_id)
-            plot_data.push([data[field_name]])
         }
     }
 
