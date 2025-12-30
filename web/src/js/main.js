@@ -252,14 +252,20 @@ globalThis.addFrame = function (data) {
             const fieldName = document.createElement("th")
             field.appendChild(fieldName)
             const titleCase = (str) => str.replace(/\b\S/g, t => t.toUpperCase());
-            fieldName.innerText = titleCase(field_name.replace("_", " "))
+            fieldName.innerText = titleCase(field_name.replaceAll("_", " "))
             const fieldValue = document.createElement("td")
             if (field_name == "latitude" || field_name == "longitude") {
                 const geoLink = document.createElement("a")
                 geoLink.innerText = toFixedIfNecessary(parseFloat(data[field_name]), 4)
                 geoLink.href = `geo:${data["latitude"]},${data["longitude"]}`
                 fieldValue.appendChild(geoLink)
-            } else {
+            } 
+            else if (field_name == "custom_data"){
+                for (var key of Object.keys(data[field_name])) {
+                    fieldValue.innerText  = fieldValue.innerText  + data[field_name][key].toString(16);
+                }
+            }
+            else {
                 if (field_name == "payload_id" || typeof data[field_name] != "number") {
                     fieldValue.innerText = data[field_name]
                 } else {
@@ -492,16 +498,11 @@ const traceWaterfall = {
   type: 'heatmap',
   x: [], y: [], z: [],
   colorscale: turboColorscale,
-  showscale: true,
+  showscale: false,
   xaxis: 'x2',
   yaxis: 'y2',
   zauto: false,
-  zsmooth: false,
-  colorbar: {
-    orientation: "h",
-    nticks: 5,
-    thickness: 5
-  }
+  zsmooth: false
 };
 
 globalThis.spectrum_layout.xaxis = {
