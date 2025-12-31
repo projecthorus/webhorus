@@ -11,6 +11,9 @@ web/webhorus-*
 webhorus/setup.py
 web/src/dev-dist
 .vscode/
+*.so
+_*.c
+_*.o
 
 web/.yarn/*
 .yarn/*

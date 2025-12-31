@@ -1,4 +1,4 @@
-It's advised not to install this python package locally as it will break horusdemodlib and crcmod packages.
+It's advised not to install this python package locally as it will break horusdemodlib packages.
 
 Build process (docker)
 ```
