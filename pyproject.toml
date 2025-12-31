@@ -10,7 +10,6 @@ include = [
 packages = [
     { include = "webhorus", from="."},
     { include = "pywenet", from="."},
-    { include = "crcmod", from="."},
     { include = "horusdemodlib", from="horusdemodlib"},
     { include = "horusbinaryv3", from="horusdemodlib"},
     { include = "rx", from="wenet"},
@@ -23,7 +22,7 @@ script = "build_lib.py"
 generate-setup-file = true
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.13"
 crc = "^7.1.0"
 cffi = "^1.17.1"
 python-dateutil = "^2.9.0.post0"

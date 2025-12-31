@@ -1,4 +1,4 @@
-FROM python:3.12 AS base
+FROM python:3.13 AS base
 RUN apt-get update
 RUN pip install pyodide-build
 

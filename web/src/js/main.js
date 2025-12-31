@@ -638,7 +638,7 @@ async function init_python() {
 
 
     await Promise.all([
-        globalThis.pyodide.loadPackage("./assets/cffi-1.17.1-cp312-cp312-pyodide_2024_0_wasm32.whl"),
+        globalThis.pyodide.loadPackage("./assets/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
         globalThis.pyodide.loadPackage("./assets/pycparser-2.22-py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/crc-7.1.0-py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/idna-3.7-py3-none-any.whl"),
@@ -648,9 +648,9 @@ async function init_python() {
         globalThis.pyodide.loadPackage("./assets/six-1.16.0-py2.py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/urllib3-2.2.3-py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/certifi-2024.12.14-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/webhorus-0.2.1-cp312-cp312-pyodide_2024_0_wasm32.whl"),
+        globalThis.pyodide.loadPackage("./assets/webhorus-0.2.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
         globalThis.pyodide.loadPackage("./assets/pyparsing-3.1.2-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/bitstruct-8.21.0-cp312-cp312-pyodide_2024_0_wasm32.whl"),
+        globalThis.pyodide.loadPackage("./assets/bitstruct-8.21.0-cp313-cp313-pyodide_2025_0_wasm32.whl"),
         globalThis.pyodide.loadPackage("./assets/asn1tools-0.167.0-py3-none-any.whl")
     ]);
     log_entry("Python packages loaded", "light")
@@ -879,6 +879,7 @@ globalThis.rtlFreq = function () {
 }
 
 globalThis.startAudio = async function (constraint) {
+    document.getElementById("alert").textContent = ""
     document.getElementById("wenet_latency").innerText = ""
     if (document.getElementById("about-tab").classList.contains("active")) {
         document.getElementById("frames-tab").click() // simulate clicking on the receive tab since most users will want to see that when starting the modem
