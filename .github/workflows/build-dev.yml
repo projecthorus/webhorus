@@ -47,3 +47,23 @@ jobs:
         with:
           name: web
           path: web/src/dist/**
+  deploy:
+    needs: build-package
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Download web
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::143841941773:role/github
+      - run: |
+          aws s3 sync . s3://horus-dev.sondehub.org/ --delete
+          aws s3 cp --content-type application/wasm ./assets/pyodide.asm.wasm s3://horus-dev.sondehub.org/assets/pyodide.asm.wasm
+          aws cloudfront create-invalidation --distribution-id E2BZ39U4B3U231  --paths '/*'
