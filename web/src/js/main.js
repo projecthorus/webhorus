@@ -17,6 +17,9 @@ import { concatenateReceivers } from "@jtarrio/webrtlsdr/radio/sample_receiver"
 
 import { start_wenet, stop_wenet } from "./wenet"
 
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
 
 // these only impact horus - not wenet
 const rtl_sdr_rate = 256000; 
