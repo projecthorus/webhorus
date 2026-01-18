@@ -107,6 +107,13 @@ export default defineConfig({
                             cacheName: "horus-custom-cache",
                           },
                         },
+                        {
+                        urlPattern: /assets\/.*/,
+                        handler: "NetworkFirst",
+                        options: {
+                            cacheName: "horus-0.2.1-cache",
+                        },
+                        },
                       ],
                 },
                 manifest: {
