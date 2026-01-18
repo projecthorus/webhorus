@@ -96,6 +96,7 @@ export default defineConfig({
                     type: 'module',
                 },
                 workbox: {
+                    cacheId: "horus.0.2.1",
                     globPatterns: ["**/*.{js,css,html,png,whl,wasm,zip,py,ico,svg,json}"],
                     globIgnores: ["sw.js","workbox-*.js"],
                     maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
@@ -106,14 +107,7 @@ export default defineConfig({
                           options: {
                             cacheName: "horus-custom-cache",
                           },
-                        },
-                        {
-                        urlPattern: /assets\/.*/,
-                        handler: "NetworkFirst",
-                        options: {
-                            cacheName: "horus-0.2.1-cache",
-                        },
-                        },
+                        }
                       ],
                 },
                 manifest: {
