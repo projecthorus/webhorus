@@ -95,6 +95,11 @@ main {
     /* not sure why bootstrap is even sitting this... */
 }
 
+.card-body table td, .card-body table th{
+    word-break: break-all;
+    min-width: 150px;
+}
+
 @starting-style {
     .card {
         opacity: 0;

@@ -2,7 +2,7 @@ from cffi import FFI
 import re
 
 ffibuilder = FFI()
-
+import os
 
 def preprocess_h():
   #  data = open("./wenet/src/H2064_516_sparse.h","r").read().replace("#include <stdint.h>","")
@@ -269,7 +269,7 @@ ffibuilder.set_source("_drs232_ldpc_cffi",
         "./wenet/src/phi0.c",
       ],
        include_dirs = [ "./wenet/src"],
-       extra_compile_args = ["-sSTACK_SIZE=5MB"]
+       extra_compile_args = ["-sSTACK_SIZE=5MB"] if os.environ.get("PYODIDE_EMSCRIPTEN_VERSION") else [] # hack to only set this on web builds
      )   # library name, for the linker
 
 if __name__ == "__main__":

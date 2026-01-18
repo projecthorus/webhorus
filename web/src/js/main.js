@@ -252,15 +252,21 @@ globalThis.addFrame = function (data) {
             const fieldName = document.createElement("th")
             field.appendChild(fieldName)
             const titleCase = (str) => str.replace(/\b\S/g, t => t.toUpperCase());
-            fieldName.innerText = titleCase(field_name.replace("_", " "))
+            fieldName.innerText = titleCase(field_name.replaceAll("_", " "))
             const fieldValue = document.createElement("td")
             if (field_name == "latitude" || field_name == "longitude") {
                 const geoLink = document.createElement("a")
                 geoLink.innerText = toFixedIfNecessary(parseFloat(data[field_name]), 4)
                 geoLink.href = `geo:${data["latitude"]},${data["longitude"]}`
                 fieldValue.appendChild(geoLink)
-            } else {
-                if (field_name == "payload_id") {
+            } 
+            else if (field_name == "custom_data"){
+                for (var key of Object.keys(data[field_name])) {
+                    fieldValue.innerText  = fieldValue.innerText  + data[field_name][key].toString(16);
+                }
+            }
+            else {
+                if (field_name == "payload_id" || typeof data[field_name] != "number") {
                     fieldValue.innerText = data[field_name]
                 } else {
                     fieldValue.innerText = toFixedIfNecessary(parseFloat(data[field_name]), 4)
@@ -398,22 +404,24 @@ function updatePlots(data) {
 
 
     for (let field_name of data.packet_format.fields.map((x) => x[0]).concat(data.custom_field_names)) {
-        if (field_name != "custom" &&
-            field_name != "checksum" &&
-            field_name != "sequence_number" &&
-            field_name != "time" &&
-            field_name != "payload_id" &&
-            field_name != "longitude" &&
-            field_name != "latitude"
-        ) {
-            var field_name_payload = field_name + "[" + data.payload_id + "]"
-            if (!(axis_mapping.includes(field_name_payload))) {
-                axis_mapping.push(field_name_payload)
-                globalThis.Plotly.addTraces('plots', { y: [], x: [], name: field_name_payload, mode: 'lines' })
+        if (typeof data[field_name] === "number"){
+            if (field_name != "custom" &&
+                field_name != "checksum" &&
+                field_name != "sequence_number" &&
+                field_name != "time" &&
+                field_name != "payload_id" &&
+                field_name != "longitude" &&
+                field_name != "latitude"
+            ) {
+                var field_name_payload = field_name + "[" + data.payload_id + "]"
+                if (!(axis_mapping.includes(field_name_payload))) {
+                    axis_mapping.push(field_name_payload)
+                    globalThis.Plotly.addTraces('plots', { y: [], x: [], name: field_name_payload, mode: 'lines' })
+                }
+                var axis_id = axis_mapping.indexOf(field_name_payload)
+                axis_ids.push(axis_id)
+                plot_data.push([data[field_name]])
             }
-            var axis_id = axis_mapping.indexOf(field_name_payload)
-            axis_ids.push(axis_id)
-            plot_data.push([data[field_name]])
         }
     }
 
@@ -490,16 +498,11 @@ const traceWaterfall = {
   type: 'heatmap',
   x: [], y: [], z: [],
   colorscale: turboColorscale,
-  showscale: true,
+  showscale: false,
   xaxis: 'x2',
   yaxis: 'y2',
   zauto: false,
-  zsmooth: false,
-  colorbar: {
-    orientation: "h",
-    nticks: 5,
-    thickness: 5
-  }
+  zsmooth: false
 };
 
 globalThis.spectrum_layout.xaxis = {
@@ -635,7 +638,7 @@ async function init_python() {
 
 
     await Promise.all([
-        globalThis.pyodide.loadPackage("./assets/cffi-1.17.1-cp312-cp312-pyodide_2024_0_wasm32.whl"),
+        globalThis.pyodide.loadPackage("./assets/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
         globalThis.pyodide.loadPackage("./assets/pycparser-2.22-py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/crc-7.1.0-py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/idna-3.7-py3-none-any.whl"),
@@ -645,7 +648,10 @@ async function init_python() {
         globalThis.pyodide.loadPackage("./assets/six-1.16.0-py2.py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/urllib3-2.2.3-py3-none-any.whl"),
         globalThis.pyodide.loadPackage("./assets/certifi-2024.12.14-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/webhorus-0.2.0-cp312-cp312-pyodide_2024_0_wasm32.whl")
+        globalThis.pyodide.loadPackage("./assets/webhorus-0.2.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
+        globalThis.pyodide.loadPackage("./assets/pyparsing-3.1.2-py3-none-any.whl"),
+        globalThis.pyodide.loadPackage("./assets/bitstruct-8.21.0-cp313-cp313-pyodide_2025_0_wasm32.whl"),
+        globalThis.pyodide.loadPackage("./assets/asn1tools-0.167.0-py3-none-any.whl")
     ]);
     log_entry("Python packages loaded", "light")
     await globalThis.pyodide.runPythonAsync(`
@@ -873,6 +879,7 @@ globalThis.rtlFreq = function () {
 }
 
 globalThis.startAudio = async function (constraint) {
+    document.getElementById("alert").textContent = ""
     document.getElementById("wenet_latency").innerText = ""
     if (document.getElementById("about-tab").classList.contains("active")) {
         document.getElementById("frames-tab").click() // simulate clicking on the receive tab since most users will want to see that when starting the modem

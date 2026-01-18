@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "webhorus"
-version = "0.2.0"
+version = "0.2.1"
 description = ""
 authors = ["xssfox <xss@sprocketfox.io>"]
 readme = "README.md"
@@ -10,8 +10,8 @@ include = [
 packages = [
     { include = "webhorus", from="."},
     { include = "pywenet", from="."},
-    { include = "crcmod", from="."},
     { include = "horusdemodlib", from="horusdemodlib"},
+    { include = "horusbinaryv3", from="horusdemodlib"},
     { include = "rx", from="wenet"},
    
 ]
@@ -22,11 +22,12 @@ script = "build_lib.py"
 generate-setup-file = true
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.13"
 crc = "^7.1.0"
 cffi = "^1.17.1"
 python-dateutil = "^2.9.0.post0"
 requests = "^2.32.3"
+asn1tools = "^0.165.0"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^75.8.2"

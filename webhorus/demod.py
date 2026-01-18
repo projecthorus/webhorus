@@ -4,6 +4,8 @@ import datetime
 import horusdemodlib.payloads
 import horusdemodlib.decoder
 import horusdemodlib.utils
+import traceback
+import logging
 
 horusdemodlib.decoder.horusdemodlib.payloads.HORUS_PAYLOAD_LIST = horusdemodlib.payloads.init_payload_id_list()
 horusdemodlib.decoder.horusdemodlib.payloads.HORUS_CUSTOM_FIELDS = horusdemodlib.payloads.init_custom_field_list()
@@ -110,6 +112,10 @@ class Demod():
     def mode(self):
         mode = horus_api.horus_get_mode(self.hstates)
         return mode
+    
+    @property
+    def packet_version(self):
+        return self.hstates.version
 
     @property
     def snr(self):
@@ -143,13 +149,18 @@ class Demod():
         )
         data_out_bytes = bytes(_horus_api_cffi.ffi.buffer(data_out))
         crc = bool(self.crc_ok)
-        data_out_bytes = data_out_bytes.rstrip(b'\x00')
+        data_out_bytes = data_out_bytes.split(b"\x00")[0]
         if self.mode not in [
             horus_api.HORUS_MODE_RTTY_7N1,
             horus_api.HORUS_MODE_RTTY_7N2,
             horus_api.HORUS_MODE_RTTY_8N2,
         ]:
-            data_out_bytes = bytes.fromhex(data_out_bytes.decode("ascii"))
+            try:
+                data_out_bytes = bytes.fromhex(data_out_bytes.decode("ascii"))
+            except ValueError:
+                logging.debug(data_out_bytes)
+                pass
+
 
         self.snr_samples.append(self.modem_stats['snr_est'])
         self.snr_samples = self.snr_samples[-SNR_SAMPLES:]
@@ -167,14 +178,22 @@ if __name__ == "__main__":
     parser.add_argument('filename') 
     args = parser.parse_args()
 
+    from pprint import pprint
     with Demod() as demod:
         with open(args.filename, "rb") as f:
             while audio_in := f.read(demod.nin*2):
-               data = demod.demodulate(audio_in)
-               print(demod.modem_stats['snr_est'])
-               if data and data.crc_pass:
-                   packet = horusdemodlib.decoder.decode_packet(
-                       data.data
-                   )
-                   
-                   print(telem_to_sondehub(packet))
+                data = demod.demodulate(audio_in)
+                if data and data.crc_pass:
+                    print("---")
+                    try:
+                        packet = horusdemodlib.decoder.decode_packet(
+                            data.data
+                        )
+                        pprint(packet)
+                        pprint(horusdemodlib.utils.telem_to_sondehub(packet,check_time=False))
+                    except:
+                        print(data.data)
+                        print(traceback.format_exc())
+                    
+                    
+                    
