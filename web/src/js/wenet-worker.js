@@ -11,20 +11,20 @@ let fftInterval = 500; // default
 // Now load any packages we need, run the code, and send the result back.
 const pyodide = await loadPyodide();
 await Promise.all([
-        globalThis.pyodide.loadPackage("./assets/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
-        globalThis.pyodide.loadPackage("./assets/pycparser-2.22-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/crc-7.1.0-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/idna-3.7-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/charset_normalizer-3.3.2-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/python_dateutil-2.9.0.post0-py2.py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/requests-2.32.3-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/six-1.16.0-py2.py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/urllib3-2.2.3-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/certifi-2024.12.14-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/webhorus-0.2.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
-        globalThis.pyodide.loadPackage("./assets/pyparsing-3.1.2-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/bitstruct-8.21.0-cp313-cp313-pyodide_2025_0_wasm32.whl"),
-        globalThis.pyodide.loadPackage("./assets/asn1tools-0.167.0-py3-none-any.whl")
+        pyodide.loadPackage("./assets/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
+        pyodide.loadPackage("./assets/pycparser-2.22-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/crc-7.1.0-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/idna-3.7-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/charset_normalizer-3.3.2-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/python_dateutil-2.9.0.post0-py2.py3-none-any.whl"),
+        pyodide.loadPackage("./assets/requests-2.32.3-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/six-1.16.0-py2.py3-none-any.whl"),
+        pyodide.loadPackage("./assets/urllib3-2.2.3-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/certifi-2024.12.14-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/webhorus-0.2.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
+        pyodide.loadPackage("./assets/pyparsing-3.1.2-py3-none-any.whl"),
+        pyodide.loadPackage("./assets/bitstruct-8.21.0-cp313-cp313-pyodide_2025_0_wasm32.whl"),
+        pyodide.loadPackage("./assets/asn1tools-0.167.0-py3-none-any.whl")
 ])
 
 var freq = 0;
