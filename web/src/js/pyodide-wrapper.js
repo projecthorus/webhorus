@@ -16,7 +16,13 @@ import asn1tools from '~asn1tools'
 
 export {pyodide};
 
-let pyodide = await loadPyodide();
+let pyodide = await loadPyodide().catch(() => {
+    document.getElementById("loadingtext").innerText = "Error loading  pyodide. Attempting to refresh."
+    setTimeout(()=>{
+        location.reload();
+    }, 5000)
+
+});
 
 await Promise.all([
     pyodide.loadPackage(cffi),
@@ -32,4 +38,10 @@ await Promise.all([
     pyodide.loadPackage(pyparsing),
     pyodide.loadPackage(bitstruct),
     pyodide.loadPackage(asn1tools)
-]);
+]).catch(() => {
+    document.getElementById("loadingtext").innerText = "Error loading  packages. Attempting to refresh."
+    setTimeout(()=>{
+        location.reload();
+    }, 5000)
+    
+})
