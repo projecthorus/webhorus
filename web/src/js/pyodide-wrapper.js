@@ -1,3 +1,9 @@
+import 'pyodide/pyodide.asm.js';
+// @ts-ignore
+import pyodideStdLib from 'pyodide/python_stdlib.zip';
+import pyodideLockFile from 'pyodide/pyodide-lock.json?url';
+
+
 import { loadPyodide } from "pyodide";
 
 import cffi from "../whl/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"
@@ -16,7 +22,10 @@ import asn1tools from '~asn1tools'
 
 export {pyodide};
 
-let pyodide = await loadPyodide().catch(() => {
+let pyodide = await loadPyodide({
+    stdLibURL: pyodideStdLib,
+    lockFileURL: pyodideLockFile
+}).catch(() => {
     document.getElementById("loadingtext").innerText = "Error loading  pyodide. Attempting to refresh."
     setTimeout(()=>{
         location.reload();

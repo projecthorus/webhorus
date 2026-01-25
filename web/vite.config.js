@@ -38,7 +38,7 @@ export default defineConfig({
     server: {
         host: '0.0.0.0'
     },
-    assetsInclude: ["**/*.whl"],
+    assetsInclude: ["**/*.whl", "**/*.zip", "**/*.wasm","pyodide/pyodide-lock.json"],
     resolve: {
         alias: {
             '~webhorus': resolve(__dirname,globSync("src/whl/webhorus*-cp3*-*pyodide*wasm32.whl")[0]),
@@ -86,7 +86,7 @@ export default defineConfig({
             {
                 targets: [
             
-                    viteStaticCopyPyodide()
+                   viteStaticCopyPyodide()
                 ],
                 verbose: true,
                 hook: 'writeBundle'
