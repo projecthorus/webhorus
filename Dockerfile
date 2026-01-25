@@ -24,7 +24,7 @@ pyodide build --outdir /webhorus/web/src/public/assets/'
 COPY ./ /webhorus
 WORKDIR /webhorus
 RUN bash -c 'source /webhorus/emsdk/emsdk_env.sh && \
-pyodide build --outdir /webhorus/web/src/public/assets/ && ls /webhorus/web/src/public/assets/'
+pyodide build --outdir /webhorus/web/src/public/assets/ && ls /webhorus/web/src/whl/'
 
 FROM scratch AS export
 COPY --from=base /webhorus/web/src/public/assets/webhorus*.whl /

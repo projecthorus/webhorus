@@ -1,4 +1,5 @@
 import { dirname, join, resolve } from "path";
+import { globSync } from 'glob';
 import { defineConfig } from 'vite'
 import { fileURLToPath } from "url";
 import copy from 'rollup-plugin-copy'
@@ -37,8 +38,12 @@ export default defineConfig({
     server: {
         host: '0.0.0.0'
     },
+    assetsInclude: ["**/*.whl"],
     resolve: {
         alias: {
+            '~webhorus': resolve(__dirname,globSync("src/whl/webhorus-*pyodide*.whl")[0]),
+            '~bitstruct': resolve(__dirname,globSync("src/whl/bitstruct-*pyodide*.whl")[0]),
+            '~asn1tools': resolve(__dirname,globSync("src/whl/asn1tools*.whl")[0]),
             '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
             '~leaflet': resolve(__dirname, 'node_modules/leaflet'),
             '~radioreceiver': resolve(__dirname, 'node_modules/radioreceiver'),

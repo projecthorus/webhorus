@@ -5,6 +5,7 @@
     "@jtarrio/webrtlsdr": "^0.1.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
+    "glob": "^13.0.0",
     "leaflet": "^1.9.4",
     "plotly.js-dist-min": "^3.3.1",
     "pyodide": "^0.29.0",
