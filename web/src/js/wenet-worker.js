@@ -13,7 +13,6 @@ const pyodide = await loadPyodide();
 await Promise.all([
         pyodide.loadPackage("../assets/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
         pyodide.loadPackage("../assets/pycparser-2.22-py3-none-any.whl"),
-        pyodide.loadPackage("../assets/crc-7.1.0-py3-none-any.whl"),
         pyodide.loadPackage("../assets/idna-3.7-py3-none-any.whl"),
         pyodide.loadPackage("../assets/charset_normalizer-3.3.2-py3-none-any.whl"),
         pyodide.loadPackage("../assets/python_dateutil-2.9.0.post0-py2.py3-none-any.whl"),
