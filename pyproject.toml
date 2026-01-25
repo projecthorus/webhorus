@@ -26,7 +26,7 @@ python = "^3.13"
 cffi = "^1.17.1"
 python-dateutil = "^2.9.0.post0"
 requests = "^2.32.3"
-asn1tools = "^0.165.0"
+asn1tools = "^0.167.0"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^75.8.2"
