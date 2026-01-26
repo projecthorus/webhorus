@@ -2,7 +2,7 @@ It's advised not to install this python package locally as it will break horusde
 
 Build process (docker)
 ```
-docker buildx build  --output ./web/src/public/assets .
+docker buildx build  --output ./web/src/whl .
 ```
 
 Web dev
