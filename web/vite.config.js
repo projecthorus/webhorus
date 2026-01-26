@@ -2,34 +2,11 @@ import { dirname, join, resolve } from "path";
 import { globSync } from 'glob';
 import { defineConfig } from 'vite'
 import { fileURLToPath } from "url";
-import copy from 'rollup-plugin-copy'
 import { VitePWA } from 'vite-plugin-pwa'
 import prebundleWorkers from "vite-plugin-prebundle-workers";
+import { readFile, writeFile } from "fs";
 
-
-const PYODIDE_EXCLUDE = [
-    "!**/*.{md,html}",
-    "!**/*.d.ts",
-    "!**/*.whl",
-    "!**/node_modules",
-    "!**/python_stdlib.zip",
-    "!**/pyodide-lock.json",
-    "!**/pyodide.js",
-    "!**/pyodide.asm.js"
-];
-
-export function viteStaticCopyPyodide() {
-    const pyodideDir = "node_modules/pyodide";
-    return  {
-                src: [join(pyodideDir, "*")].concat(PYODIDE_EXCLUDE),
-                dest: "src/dist/assets/",
-            }
-        
-}
 export default defineConfig({
-    // define: {
-    //     globalThis: 'window'
-    // },
     esbuild: {
         supported: {
           'top-level-await': true //browsers can handle top-level-await features
@@ -63,39 +40,55 @@ export default defineConfig({
     },
 
     build: {
-        minify: false,
+        minify: true,
         rollupOptions: {
-            treeshake: false,
+            treeshake: true,
             output: {
-                //'inlineDynamicImports': false,
-                //'preserveModules': true,
                 'preserveModulesRoot': 'src',
-
+                sourcemap: true,
             },
             preserveEntrySignatures: true
-        }
+        },
+        sourcemap: true
     },
     optimizeDeps: {
         esbuildOptions: {
             define: {
                 global: 'globalThis'
-            }
-        },
-        exclude: ["pyodide", "loadPyodide"],
-        noDiscovery: true
+            },
+        }
     },
     plugins: [
+        {
+            // This is a big hack so that we can have nice hashed assets for all the pyodide resources
+            // we don't use indexurl so we abuse that as our pyodide.asm.wasm path
+            // and replace out the "pyodide.asm.wasm" addition. It seems to add a / at the end of we also need
+            // to substring that out.
+            name: 'monkeypatch-pyodide',
+            config(options) {
+                    readFile("node_modules/pyodide/pyodide.js", 'utf8', function (err,data) {
+                        if (err) {
+                            throw err
+                        }
+                        var result = data.replace('e+"pyodide.asm.wasm"', 'e.substring(0,e.length-1)');
 
-        copy(
-            {
-                targets: [
-            
-                   viteStaticCopyPyodide()
-                ],
-                verbose: true,
-                hook: 'writeBundle'
-            }
-        ), 
+                        writeFile("node_modules/pyodide/pyodide.js", result, 'utf8', function (err) {
+                            if (err) throw err;
+                        });
+                    }); 
+                    readFile("node_modules/pyodide/pyodide.mjs", 'utf8', function (err,data) {
+                        if (err) {
+                            throw err
+                        }
+                        var result = data.replace('e+"pyodide.asm.wasm"', 'e.substring(0,e.length-1)');
+
+                        writeFile("node_modules/pyodide/pyodide.mjs", result, 'utf8', function (err) {
+                            if (err) throw err;
+                        });
+                    }); 
+                }
+                
+        },
         VitePWA(
             {
                 registerType: 'autoUpdate',

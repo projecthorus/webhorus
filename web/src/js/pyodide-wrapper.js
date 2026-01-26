@@ -2,7 +2,7 @@ import 'pyodide/pyodide.asm.js';
 // @ts-ignore
 import pyodideStdLib from 'pyodide/python_stdlib.zip';
 import pyodideLockFile from 'pyodide/pyodide-lock.json?url';
-
+import pyodideWasm from 'pyodide/pyodide.asm.wasm?url';
 
 import { loadPyodide } from "pyodide";
 
@@ -24,8 +24,10 @@ export {pyodide};
 
 let pyodide = await loadPyodide({
     stdLibURL: pyodideStdLib,
-    lockFileURL: pyodideLockFile
-}).catch(() => {
+    lockFileURL: pyodideLockFile,
+    indexURL: pyodideWasm
+}).catch((err) => {
+    console.error(err)
     document.getElementById("loadingtext").innerText = "Error loading  pyodide. Attempting to refresh."
     setTimeout(()=>{
         location.reload();

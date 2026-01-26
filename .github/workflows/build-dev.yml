@@ -65,5 +65,5 @@ jobs:
           role-to-assume: arn:aws:iam::143841941773:role/github
       - run: |
           aws s3 sync . s3://horus-dev.sondehub.org/ --delete
-          aws s3 cp --content-type application/wasm ./assets/pyodide.asm.wasm s3://horus-dev.sondehub.org/assets/pyodide.asm.wasm
+          aws s3 cp --content-type application/wasm ./assets/*.wasm s3://horus-dev.sondehub.org/assets/
           aws cloudfront create-invalidation --distribution-id E2BZ39U4B3U231  --paths '/*'
