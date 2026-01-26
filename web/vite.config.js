@@ -12,6 +12,10 @@ const PYODIDE_EXCLUDE = [
     "!**/*.d.ts",
     "!**/*.whl",
     "!**/node_modules",
+    "!**/python_stdlib.zip",
+    "!**/pyodide-lock.json",
+    "!**/pyodide.js",
+    "!**/pyodide.asm.js"
 ];
 
 export function viteStaticCopyPyodide() {
