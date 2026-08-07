@@ -39,68 +39,61 @@ class Wenet():
         if packets:
             for packet in packets:
                     
-                # try:
-                    packet = packet[:-2] # remove crc
-                    packet_type = WenetPackets.decode_packet_type(packet)
-                    if packet_type == WENET_PACKET_TYPES.IDLE:
+                packet = packet[:-2] # remove crc
+                packet_type = WenetPackets.decode_packet_type(packet)
+                if packet_type == WENET_PACKET_TYPES.IDLE:
+                    continue
+                elif packet_type == WENET_PACKET_TYPES.TEXT_MESSAGE:
+                    return ["log",self.log_packet(packet)]
+                    
+                elif packet_type == WENET_PACKET_TYPES.SEC_PAYLOAD_TELEMETRY:
+                    return ["log",self.log_packet(packet)]
+                elif packet_type == WENET_PACKET_TYPES.GPS_TELEMETRY: # this goes to sondehub
+                    logging.debug(WenetPackets.gps_telemetry_decoder(packet))
+                    return(["gps",WenetPackets.gps_telemetry_decoder(packet)])
+                elif packet_type == WENET_PACKET_TYPES.ORIENTATION_TELEMETRY:
+                    return ["log",self.log_packet(packet)]
+                elif packet_type == WENET_PACKET_TYPES.IMAGE_TELEMETRY:
+                    return ["log",self.log_packet(packet)]
+
+                elif packet_type == WENET_PACKET_TYPES.SSDV:
+                    packet_info = ssdv_packet_info(packet)
+                    return_image= None
+
+                    if packet_info['error'] != 'None':
+                        logging.error(packet_info['error'])
                         continue
-                    elif packet_type == WENET_PACKET_TYPES.TEXT_MESSAGE:
-                        return ["log",self.log_packet(packet)]
-                        
-                    elif packet_type == WENET_PACKET_TYPES.SEC_PAYLOAD_TELEMETRY:
-                        self.log_packet(packet)
-                    elif packet_type == WENET_PACKET_TYPES.GPS_TELEMETRY: # this goes to sondehub
-                        logging.debug(WenetPackets.gps_telemetry_decoder(packet))
-                        return(["gps",WenetPackets.gps_telemetry_decoder(packet)])
-                    elif packet_type == WENET_PACKET_TYPES.ORIENTATION_TELEMETRY:
-                        return ["log",self.log_packet(packet)]
-                    elif packet_type == WENET_PACKET_TYPES.IMAGE_TELEMETRY:
-                        return ["log",self.log_packet(packet)]
-
-                    elif packet_type == WENET_PACKET_TYPES.SSDV:
-                        packet_info = ssdv_packet_info(packet)
-                        packet_as_string = ssdv_packet_string(packet)
-                        return_image= None
-
-                        if packet_info['error'] != 'None':
-                            logging.error(packet_info['error'])
-                            continue
-                        self.upload_buffer.append(base64.b64encode(packet).decode('ascii')) # this really should be decoupled from here but its an easy solution for the moment
+                    self.upload_buffer.append(base64.b64encode(packet).decode('ascii')) # this really should be decoupled from here but its an easy solution for the moment
 
 
-                        if (packet_info['image_id'] != self.current_image) or (packet_info['callsign'] != self.current_callsign) :
-                            # Attempt to decode current image if we have enough packets.
-                            logging.debug("New image - ID #%d" % packet_info['image_id'])
-                            if self.current_packet_count > 0:
+                    if (packet_info['image_id'] != self.current_image) or (packet_info['callsign'] != self.current_callsign) :
+                        # Attempt to decode current image if we have enough packets.
+                        logging.debug("New image - ID #%d" % packet_info['image_id'])
+                        if self.current_packet_count > 0:
 
-                                image_output = self.img_data.image
-                                return_image = ["image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
-                                
-                                self.img_data = SSDV()
-                            else:
-                                logging.debug("Not enough packets to decode previous image.")
-
-                            # Now set up for the new image.
-                            self.current_image = packet_info['image_id']
-                            self.current_callsign = packet_info['callsign']
-                            self.current_packet_count = 1
-
+                            image_output = self.img_data.image
+                            return_image = ["image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
+                            
                             self.img_data = SSDV()
-                            self.img_data.add_packet(packet)
-
                         else:
-                            self.img_data.add_packet(packet)
-                            self.current_packet_count += 1
+                            logging.debug("Not enough packets to decode previous image.")
 
-                            if self.current_packet_count % self.partialupdate == 0:
+                        # Now set up for the new image.
+                        self.current_image = packet_info['image_id']
+                        self.current_callsign = packet_info['callsign']
+                        self.current_packet_count = 1
 
-                                image_output = self.img_data.image
-                                return_image = ["image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
-                                self.upload_buffer = []
-                        if return_image:
-                            return return_image
-                # except KeyboardInterrupt:
-                #     raise KeyboardInterrupt
-                # except:
-                #     logging.error("Error while processing packet")
-                #     print(traceback.format_exception())
+                        self.img_data = SSDV()
+                        self.img_data.add_packet(packet)
+
+                    else:
+                        self.img_data.add_packet(packet)
+                        self.current_packet_count += 1
+
+                        if self.current_packet_count % self.partialupdate == 0:
+
+                            image_output = self.img_data.image
+                            return_image = ["image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
+                            self.upload_buffer = []
+                    if return_image:
+                        return return_image
