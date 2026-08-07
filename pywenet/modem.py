@@ -4,7 +4,7 @@ from _fsk_cffi import ffi
 from _fsk_cffi.lib import fsk_create, fsk_demod_sd, fsk_nin, fsk_get_demod_stats, fsk_demod, fsk_create_hbr, fsk_set_est_limits
 import enum
 import logging
-from crc import Calculator,  Configuration
+import binascii
 import collections
 
 
@@ -12,11 +12,8 @@ BYTES_PER_PACKET = 256
 CRC_BYTES = 2
 PARITY_BYTES = 65
 
-def crc16(data):
-    calculator = Calculator(Configuration(
-        16, 0x1021,0xffff
-    ),True)
-    return calculator.checksum(data)
+# CRC16-CCITT from binascii
+crc16 = lambda x: binascii.crc_hqx(x,0xffff)
 
 class Modem():
     def __init__(self,

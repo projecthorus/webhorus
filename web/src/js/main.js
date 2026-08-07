@@ -16,6 +16,7 @@ import { ComplexDownsampler } from "@jtarrio/webrtlsdr/dsp/resamplers";
 import { concatenateReceivers } from "@jtarrio/webrtlsdr/radio/sample_receiver"
 
 import { start_wenet, stop_wenet } from "./wenet"
+import { pyodide } from './pyodide-wrapper';
 
 
 // these only impact horus - not wenet
@@ -99,7 +100,6 @@ function loadTrackMap() {
     trackMap.invalidateSize();
 }
 
-import { loadPyodide } from "pyodide";
 var settings_loaded = false;
 
 globalThis.saveSettings = function () {
@@ -637,24 +637,8 @@ async function init_python() {
     log_entry("Starting python load", "light")
 
 
-    await Promise.all([
-        globalThis.pyodide.loadPackage("./assets/cffi-1.17.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
-        globalThis.pyodide.loadPackage("./assets/pycparser-2.22-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/crc-7.1.0-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/idna-3.7-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/charset_normalizer-3.3.2-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/python_dateutil-2.9.0.post0-py2.py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/requests-2.32.3-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/six-1.16.0-py2.py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/urllib3-2.2.3-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/certifi-2024.12.14-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/webhorus-0.2.1-cp313-cp313-pyodide_2025_0_wasm32.whl"),
-        globalThis.pyodide.loadPackage("./assets/pyparsing-3.1.2-py3-none-any.whl"),
-        globalThis.pyodide.loadPackage("./assets/bitstruct-8.21.0-cp313-cp313-pyodide_2025_0_wasm32.whl"),
-        globalThis.pyodide.loadPackage("./assets/asn1tools-0.167.0-py3-none-any.whl")
-    ]);
     log_entry("Python packages loaded", "light")
-    await globalThis.pyodide.runPythonAsync(`
+    await pyodide.runPythonAsync(`
         class r_get():
             def __init__(self,url,timeout):
                 if url not in [PAYLOAD_ID_LIST_URL, HORUS_CUSTOM_FIELD_URL]:
@@ -682,12 +666,12 @@ async function init_python() {
         except:
             print("Issue fetching payload formats")
         `)
-    globalThis.pyodide.runPython(await (await fetch("/py/main.py")).text());
+    pyodide.runPython(await (await fetch("/py/main.py")).text());
     log_entry("main.py loaded", "light")
 
-    globalThis.write_audio = globalThis.pyodide.runPython("write_audio")
-    globalThis.fix_datetime = globalThis.pyodide.runPython("fix_datetime")
-    globalThis.start_modem = globalThis.pyodide.runPython("start_modem")
+    globalThis.write_audio = pyodide.runPython("write_audio")
+    globalThis.fix_datetime = pyodide.runPython("fix_datetime")
+    globalThis.start_modem = pyodide.runPython("start_modem")
 
     document.getElementById("audio_start").removeAttribute("disabled");
     document.getElementById("audio_start").innerText = "Start"
@@ -699,7 +683,7 @@ async function init_python() {
     document.getElementById("loaded").classList.remove("d-none")
 
     globalThis.payload_id_updater = setInterval(()=>{
-        globalThis.pyodide.runPythonAsync(`
+        pyodide.runPythonAsync(`
             payload_ids =  await (await pyfetch(PAYLOAD_ID_LIST_URL)).text()
             payload_formats = await (await pyfetch(HORUS_CUSTOM_FIELD_URL)).text()
         `);
@@ -1576,7 +1560,6 @@ globalThis.loadSettings();
 
 
 settings_loaded = true
-globalThis.pyodide = await loadPyodide();
 
 loadMapPicker()
 loadTrackMap()

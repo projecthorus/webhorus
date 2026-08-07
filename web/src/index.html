@@ -422,8 +422,8 @@
                                             Version</label>
                                         <select id="wenet_version" class="form-select" aria-label="Wenet mode"
                                             onchange="saveSettings();update_wenet();">
-                                            <option value="1" selected>Wenet Traditional (115177 UART)</option>
-                                            <option value="2">Wenet v2 (96000 I2S)</option>
+                                            <option value="1">Wenet Traditional (115177 UART)</option>
+                                            <option value="2" selected>Wenet v2 (96000 I2S)</option>
                                         </select>
                                         <div id="passwordHelpBlock" class="form-text">
                                             If unsure or unknown select "Wenet Traditional"
@@ -721,7 +721,7 @@
     </div>
     <div id="loading" class="d-flex flex-column min-vh-100 min-vw-100">
         <div class="d-flex flex-grow-1 justify-content-center align-items-center vh-100" id="loading_content">
-        <span>Loading...</span>
+        <span id="loadingtext">Loading...</span>
         </div>
     </div>
 </body>
