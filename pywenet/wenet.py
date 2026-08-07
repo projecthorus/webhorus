@@ -47,7 +47,7 @@ class Wenet():
                     return ["log",self.log_packet(packet)]
                     
                 elif packet_type == WENET_PACKET_TYPES.SEC_PAYLOAD_TELEMETRY:
-                    return ["log",self.log_packet(packet)]
+                    self.log_packet(packet)
                 elif packet_type == WENET_PACKET_TYPES.GPS_TELEMETRY: # this goes to sondehub
                     logging.debug(WenetPackets.gps_telemetry_decoder(packet))
                     return(["gps",WenetPackets.gps_telemetry_decoder(packet)])
