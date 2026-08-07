@@ -22,8 +22,8 @@ export default defineConfig({
     assetsInclude: ["**/*.whl", "**/*.zip", "**/*.wasm","pyodide/pyodide-lock.json"],
     resolve: {
         alias: {
-            '~webhorus': resolve(__dirname,globSync("src/whl/webhorus*-cp3*-*pyodide*wasm32.whl")[0]),
-            '~bitstruct': resolve(__dirname,globSync("src/whl/bitstruct*-cp3*-*pyodide*wasm32.whl")[0]),
+            '~webhorus': resolve(__dirname,globSync("src/whl/webhorus*-cp3*-*wasm32.whl")[0]),
+            '~bitstruct': resolve(__dirname,globSync("src/whl/bitstruct*-cp3*-*wasm32.whl")[0]),
             '~asn1tools': resolve(__dirname,globSync("src/whl/asn1tools*-none-any.whl")[0]),
             '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
             '~leaflet': resolve(__dirname, 'node_modules/leaflet'),
