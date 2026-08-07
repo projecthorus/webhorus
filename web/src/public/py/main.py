@@ -9,8 +9,17 @@ from horusdemodlib.utils import telem_to_sondehub, fix_datetime
 from importlib.metadata import version
 
 import logging
-logging.basicConfig()
-logging.getLogger().setLevel(logging.INFO)
+logging.basicConfig(level=0)
+
+def update_debug():
+    logging.info("Updating debug level")
+    if document.getElementById("debug").checked:
+        logging.getLogger().setLevel(0) # not sure why we can't use logging.DEBUG here...
+        logging.info("debug enabled")
+    else:
+        logging.getLogger().setLevel(logging.INFO)
+    
+update_debug()
 
 VERSION = version('webhorus')
 

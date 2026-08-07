@@ -161,6 +161,14 @@ function getSampleRate(){
     throw "Invalid Wenet version"
 }
 
+function getLogLevel(){
+    if ( document.getElementById("debug").checked) {
+        return 20
+    } else {
+        return 0
+    }
+}
+
 function getBaudRate(){
     if (document.getElementById("wenet_version").value == '1') {
         return 115177;
@@ -209,7 +217,8 @@ function start_wenet() {
                     "config": {
                         "rs232_framing": rs232_frame,
                         "samplerate": getSampleRate(),
-                        "baudrate": getBaudRate()
+                        "baudrate": getBaudRate(),
+                        "loglevel": getLogLevel(),
                     }
                 });
                 return
@@ -293,11 +302,11 @@ function start_wenet() {
                     
                 }
 
-                if (event.data.time.getTime() == last_sent.getTime()) {
+                if (event.data.time == undefined || event.data.time.getTime() == last_sent.getTime()) {
                     // got the last message back, reset latency to 0 to reset any delay
                     // this is a bit of a hack to keep slow clients working by only sending chunks (2s?) of RF to the modem
                     latency = 0
-                }
+                } 
 
                 return
             }
