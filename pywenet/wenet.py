@@ -36,6 +36,7 @@ class Wenet():
         return packet_to_string(packet)
     def write(self,data: bytes):
         packets = self.wenet.demodulate(data)
+        logging.debug("meow")
         if packets:
             for packet in packets:
                     

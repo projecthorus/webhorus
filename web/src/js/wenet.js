@@ -163,9 +163,9 @@ function getSampleRate(){
 
 function getLogLevel(){
     if ( document.getElementById("debug").checked) {
-        return 20
-    } else {
         return 0
+    } else {
+        return 20
     }
 }
 
