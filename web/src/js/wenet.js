@@ -231,6 +231,13 @@ function start_wenet() {
                 addText(event.data.args)
                 return
             }
+            if (event.data.type == "secondary"){
+                // Secondary payload messages can flood the log.
+                if ( document.getElementById("debug").checked) {
+                    addText(event.data.args)
+                }
+                return
+            }
             if (event.data.type == "gps") {
                 addFrameWeNet(event.data.args)
                 updatePlotsWenet(event.data.args)
