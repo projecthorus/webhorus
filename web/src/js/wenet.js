@@ -50,7 +50,13 @@ function addFrameWeNet(data) {
     const fieldTable = document.createElement("table")
     fieldTable.classList = "table card-text"
 
-
+    // Remove some garbage fields. 
+    if (Object.prototype.hasOwnProperty.call(data, "sys_telem_valid")) {
+        delete data.sys_telem_valid;
+    }
+    if (Object.prototype.hasOwnProperty.call(data, "power_telem_valid")) {
+        delete data.power_telem_valid;
+    }
 
     function toFixedIfNecessary(value, dp) {
         return +parseFloat(value).toFixed(dp);
