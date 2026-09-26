@@ -136,7 +136,7 @@ class DRS232_LDPC():
                     self.ind = 0
                     self.state = DRS232_STATE.COLLECT_PACKET
                     
-                    logging.debug("Next state COLLECT_PACKET")
+                    #logging.debug("Next state COLLECT_PACKET")
                 continue
                     
             
@@ -179,13 +179,13 @@ class DRS232_LDPC():
                         logging.info(f"packets: {self.count_packet} packet_errors:{self.count_packet_error} PER: {self.count_packet_error/self.count_packet if self.count_packet > 0 else "."} iter: {_iter}")
 
                     self.state = DRS232_STATE.LOOK_FOR_UW
-                    logging.debug("Next state LOOK_FOR_UW")
+                    #logging.debug("Next state LOOK_FOR_UW")
                     if (rx_checksum == tx_checksum):
                         logging.debug("rx packet")
                         packets.append(_packet)
                     else:
-                        logging.debug("checksum failed")
-                        logging.debug(rx_checksum)
-                        logging.debug(tx_checksum)
+                        # logging.debug("checksum failed")
+                        # logging.debug(rx_checksum)
+                        # logging.debug(tx_checksum)
                         self.count_packet_error += 1
         return packets

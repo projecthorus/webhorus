@@ -27,11 +27,18 @@ self.onmessage = async (event) => {
         console.log("setInterval in Worker to: " + event.data.interval)
         startFFTLoop(event.data.interval);
     }
+
+    if (event.data.type === "setLogLevel") {
+        self.loglevel = event.data.loglevel
+        pyodide.runPython(`logging.getLogger().setLevel(self.loglevel)`)
+        pyodide.runPython(`logging.debug('set debug level')`)
+    }
     
     if ("config" in event.data) {
         self.samplerate = event.data.config.samplerate
         self.rs232_framing = event.data.config.rs232_framing
         self.baudrate = event.data.config.baudrate
+        self.loglevel = event.data.config.loglevel
         pyodide.runPython(`
             from js import postMessage
             from js import self
@@ -39,7 +46,7 @@ self.onmessage = async (event) => {
             import struct
             import logging
             logging.basicConfig()
-            logging.getLogger().setLevel(logging.INFO)
+            logging.getLogger().setLevel(self.loglevel)
             wenet = Wenet(
                 samplerate=self.samplerate,
                 baudrate=self.baudrate,
@@ -49,18 +56,21 @@ self.onmessage = async (event) => {
             buffer = b''
             def write_wenet(audio):
                 global buffer
-                audio = audio.to_py(depth=1)
-                audio = struct.pack(('f'*len(audio)), *audio)  
-                buffer = buffer + audio
-                outputs = []
-                while len(buffer) >= wenet.nin * 2 * 4:
-                    in_modem = buffer[:wenet.nin *2 * 4]
-                    buffer = buffer[wenet.nin *2 * 4:]
-                    
-                    wenet_return = wenet.write(in_modem)
-                    if wenet_return:
-                        outputs.append(wenet_return)
-                return outputs      
+                if audio:
+                    audio = audio.to_py(depth=1)
+                    audio = struct.pack(('f'*len(audio)), *audio)  
+                    buffer = buffer + audio
+                    outputs = []
+                    while len(buffer) >= wenet.nin * 2 * 4:
+                        in_modem = buffer[:wenet.nin *2 * 4]
+                        buffer = buffer[wenet.nin *2 * 4:]
+                        
+                        wenet_return = wenet.write(in_modem)
+                        if wenet_return:
+                            outputs.append(wenet_return)
+                    return outputs
+                return []    
+              
         `
         )
 
