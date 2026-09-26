@@ -181,7 +181,7 @@ const sh_upload = setInterval(() => {
                     sh_payload.batt_i = gps_data['batt_i']
                 }
 
-                if ("aux_temp" in gps_data && gps_data['aux_temp'] > 999){
+                if ("aux_temp" in gps_data && gps_data['aux_temp'] > -999.0){
                     sh_payload.aux_temp = gps_data['aux_temp']
                 }
 
