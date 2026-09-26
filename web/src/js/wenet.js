@@ -44,7 +44,7 @@ function updatePlotsWenet(data) {
 }
 
 
-function addFrameWeNet(data) {
+function addFrameWenet(data) {
 
 
     const fieldTable = document.createElement("table")
@@ -256,7 +256,7 @@ function start_wenet() {
                 return
             }
             if (event.data.type == "gps") {
-                addFrameWeNet(event.data.args)
+                addFrameWenet(event.data.args)
                 updatePlotsWenet(event.data.args)
                 if (last_callsign) {
                     globalThis.updateMarker(
