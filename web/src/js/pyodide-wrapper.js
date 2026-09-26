@@ -19,6 +19,7 @@ import webhorus from '~webhorus'
 import pyparsing from '../whl/pyparsing-3.1.2-py3-none-any.whl'
 import bitstruct from '~bitstruct'
 import asn1tools from '~asn1tools'
+import cbor2 from '../whl/cbor2-5.9.0-py3-none-any.whl'
 
 export {pyodide};
 
@@ -45,6 +46,7 @@ await Promise.all([
     pyodide.loadPackage(six),
     pyodide.loadPackage(urllib3),
     pyodide.loadPackage(certifi),
+    pyodide.loadPackage(cbor2),
     pyodide.loadPackage(webhorus),
     pyodide.loadPackage(pyparsing),
     pyodide.loadPackage(bitstruct),
