@@ -58,10 +58,6 @@ function addFrameWeNet(data) {
         delete data.power_telem_valid;
     }
 
-    function toFixedIfNecessary(value, dp) {
-        return +parseFloat(value).toFixed(dp);
-    }
-
     function formatValue(value, dp) {
         const isNumeric =
             typeof value === "number" ||
@@ -86,12 +82,12 @@ function addFrameWeNet(data) {
         const fieldValue = document.createElement("td")
         if (_key == "latitude" || _key == "longitude") {
             const geoLink = document.createElement("a")
-            geoLink.innerText = formatValue(_value,5);// toFixedIfNecessary(parseFloat(_value), 5)
+            geoLink.innerText = formatValue(_value,5);
             geoLink.href = `geo:${data["latitude"]},${data["longitude"]}`
             fieldValue.appendChild(geoLink)
         
         } else {
-            fieldValue.innerText = formatValue(_value,4);// toFixedIfNecessary(parseFloat(_value), 4)
+            fieldValue.innerText = formatValue(_value,4);
 
         }
         field.appendChild(fieldValue)
