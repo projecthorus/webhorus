@@ -62,6 +62,20 @@ function addFrameWeNet(data) {
         return +parseFloat(value).toFixed(dp);
     }
 
+    function formatValue(value, dp) {
+        const isNumeric =
+            typeof value === "number" ||
+            (typeof value === "string" &&
+                value.trim() !== "" &&
+                Number.isFinite(Number(value)));
+
+        if (!isNumeric) {
+            return value;
+        }
+
+        return +Number(value).toFixed(dp);
+    }
+
     for (const [_key, _value] of Object.entries(data)) {
         const field = document.createElement("tr")
         fieldTable.appendChild(field)
@@ -72,11 +86,12 @@ function addFrameWeNet(data) {
         const fieldValue = document.createElement("td")
         if (_key == "latitude" || _key == "longitude") {
             const geoLink = document.createElement("a")
-            geoLink.innerText = toFixedIfNecessary(parseFloat(_value), 4)
+            geoLink.innerText = formatValue(_value,5);// toFixedIfNecessary(parseFloat(_value), 5)
             geoLink.href = `geo:${data["latitude"]},${data["longitude"]}`
             fieldValue.appendChild(geoLink)
+        
         } else {
-            fieldValue.innerText = toFixedIfNecessary(parseFloat(_value), 4)
+            fieldValue.innerText = formatValue(_value,4);// toFixedIfNecessary(parseFloat(_value), 4)
 
         }
         field.appendChild(fieldValue)
