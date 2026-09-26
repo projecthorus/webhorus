@@ -171,6 +171,20 @@ const sh_upload = setInterval(() => {
                 if ("focus_fom" in gps_data && gps_data['focus_fom'] > -999.0) {
                     sh_payload.focus_fom = gps_data['focus_fom']
                 }
+
+                // New power telemetry fields, for Wenet QRO shields
+                if ("batt_v" in gps_data && gps_data['batt_v'] > 0){
+                    sh_payload.batt_v = gps_data['batt_v']
+                }
+
+                if ("batt_i" in gps_data && gps_data['batt_i'] > 0){
+                    sh_payload.batt_i = gps_data['batt_i']
+                }
+
+                if ("aux_temp" in gps_data && gps_data['aux_temp'] > 999){
+                    sh_payload.aux_temp = gps_data['aux_temp']
+                }
+
                 return sh_payload
             })
             const response = fetch("https://api.v2.sondehub.org/amateur/telemetry", {
