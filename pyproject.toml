@@ -6,7 +6,6 @@ authors = ["xssfox <xss@sprocketfox.io>"]
 readme = "README.md"
 
 packages = [
-    { include = "webhorus", from="."},
     { include = "pywenet", from="."},
     { include = "rx", from="wenet"},
    
