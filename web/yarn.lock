@@ -6057,10 +6057,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-prebundle-workers@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "vite-plugin-prebundle-workers@npm:0.2.0"
-  checksum: 10c0/22e5e0fe17c5a2fb29408cd6b89c6427918bae9fdbb5f9a68b15eeceee4b8737523f8a451984ec15b09fd632020b9da07cbda5b1531aac814fbf25da4dca51b6
+"vite-plugin-prebundle-workers@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "vite-plugin-prebundle-workers@npm:1.0.0"
+  checksum: 10c0/53cb89873cd88b7d690276830c62de3e6742e463f1d48603a1bdf81754d3da3d6124fdb125cabdc1e0b9278d6db09c325c7aa758c6bbf058111cdd2f7e78ab01
   languageName: node
   linkType: hard
 
@@ -6171,7 +6171,7 @@ __metadata:
     rollup-plugin-copy: "npm:^3.5.0"
     sass-embedded: "npm:^1.105.0"
     vite: "npm:^8.3.1"
-    vite-plugin-prebundle-workers: "npm:^0.2.0"
+    vite-plugin-prebundle-workers: "npm:^1.0.0"
     vite-plugin-pwa: "npm:^1.3.0"
     vite-plugin-static-copy: "npm:^4.1.1"
   languageName: unknown
