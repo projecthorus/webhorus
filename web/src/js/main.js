@@ -712,7 +712,9 @@ async function add_constraints(constraint) {
             constraint.audio[x] = { "ideal": false }
         }
     }
-    constraint.audio.deviceId = supported_constraints.deviceId
+    constraint.audio.deviceId = {
+         "exact": supported_constraints.deviceId
+    }
 
     return constraint
 }
@@ -934,7 +936,7 @@ globalThis.startAudio = async function (constraint) {
                             document.getElementById("sound_adapter").appendChild(snd_opt)
                         }
                     }
-                    document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId
+                    document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId.exact
                     if (saved_device && device_id_list.includes(saved_device)) {
                         log_entry(`Found saved sound adapter - changing to: ${saved_device}`, "light")
                         document.getElementById("sound_adapter").value = saved_device
@@ -946,7 +948,7 @@ globalThis.startAudio = async function (constraint) {
                 })
             } else {
                 log_entry(`Selecting sound device: ${audio_constraint_filters.audio.deviceId}`, "light")
-                document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId
+                document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId.exact
                 start_microphone(stream);
             }
         })
