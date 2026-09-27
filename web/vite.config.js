@@ -44,6 +44,7 @@ export default defineConfig({
             output: {
                 'preserveModulesRoot': 'src',
                 sourcemap: true,
+                hashCharacters: "hex" // base64 causes -_ which python doesn't like parsing in the whl files
             },
             preserveEntrySignatures: true
         },

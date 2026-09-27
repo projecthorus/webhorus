@@ -25,6 +25,10 @@ cffi = "^1.17.1"
 # Work around for https://github.com/dateutil/dateutil/issues/1430
 six = "1.5"
 
+# Required for wenet
+cbor2 = "5.9.0"
+
+
 horusdemodlib = "^0.6.2"
 
 [tool.poetry.group.dev.dependencies]
