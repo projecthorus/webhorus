@@ -124,8 +124,11 @@ globalThis.saveSettings = function () {
         localStorage.setItem("rtlaudio", document.getElementById("rtlaudio").checked)
         localStorage.setItem("wenet_version", document.getElementById("wenet_version").value)
         localStorage.setItem("baud", document.getElementById("baud").value)
+        localStorage.setItem("debug", document.getElementById("debug").checked)
         log_entry(`Saved settings`, "light")
         report_position()
+        updateWenetLog();
+        globalThis.updateDebug();
 
         // send current fft rate to worker
         globalThis.set_worker_fft_rate()
@@ -163,6 +166,8 @@ globalThis.loadSettings = function () {
     }
     if (localStorage.getItem("upload_sondehub")) { document.getElementById("upload_sondehub").checked = (localStorage.getItem("upload_sondehub") == 'true') }
     if (localStorage.getItem("uploader_position")) { document.getElementById("uploader_position").checked = (localStorage.getItem("uploader_position") == 'true') }
+    if (localStorage.getItem("debug")) { document.getElementById("debug").checked = (localStorage.getItem("debug") == 'true') }
+
     if (localStorage.getItem("dial")) { document.getElementById("dial").value = localStorage.getItem("dial") }
     if (localStorage.getItem("tone_spacing")) { document.getElementById("tone_spacing").value = localStorage.getItem("tone_spacing") }
     if (localStorage.getItem("rtl_freq")) { document.getElementById("rtl_freq").value = localStorage.getItem("rtl_freq") }
@@ -196,6 +201,7 @@ globalThis.loadSettings = function () {
 
     log_entry(`Loaded settings`, "light")
 }
+
 
 globalThis.rtlaudio = function () {
     if (document.getElementById("radioRTL").checked && globalThis.rtlAudioNode) {
@@ -673,6 +679,8 @@ async function init_python() {
     globalThis.fix_datetime = pyodide.runPython("fix_datetime")
     globalThis.start_modem = pyodide.runPython("start_modem")
 
+    globalThis.updateDebug = pyodide.runPython("update_debug")
+
     document.getElementById("audio_start").removeAttribute("disabled");
     document.getElementById("audio_start").innerText = "Start"
     globalThis.VERSION = pyodide.runPython("VERSION")
@@ -727,7 +735,17 @@ globalThis.snd_change = async function () {
     saveSettings()
 }
 
-
+globalThis.updateWenetLog = function (){
+     if (globalThis.worker){
+         if ( document.getElementById("debug").checked) {
+            console.log("Updating log level to debug")
+            globalThis.worker.postMessage({ type: "setLogLevel", loglevel: 0 });
+        } else {
+            console.log("Updating log level to info")
+            globalThis.worker.postMessage({ type: "setLogLevel", loglevel: 20 });
+        }
+    }
+}
 
 
 var microphone_stream = null

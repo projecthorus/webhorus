@@ -44,16 +44,32 @@ function updatePlotsWenet(data) {
 }
 
 
-function addFrameWeNet(data) {
+function addFrameWenet(data) {
 
 
     const fieldTable = document.createElement("table")
     fieldTable.classList = "table card-text"
 
+    // Remove some garbage fields. 
+    if (Object.prototype.hasOwnProperty.call(data, "sys_telem_valid")) {
+        delete data.sys_telem_valid;
+    }
+    if (Object.prototype.hasOwnProperty.call(data, "power_telem_valid")) {
+        delete data.power_telem_valid;
+    }
 
+    function formatValue(value, dp) {
+        const isNumeric =
+            typeof value === "number" ||
+            (typeof value === "string" &&
+                value.trim() !== "" &&
+                Number.isFinite(Number(value)));
 
-    function toFixedIfNecessary(value, dp) {
-        return +parseFloat(value).toFixed(dp);
+        if (!isNumeric) {
+            return value;
+        }
+
+        return +Number(value).toFixed(dp);
     }
 
     for (const [_key, _value] of Object.entries(data)) {
@@ -66,11 +82,12 @@ function addFrameWeNet(data) {
         const fieldValue = document.createElement("td")
         if (_key == "latitude" || _key == "longitude") {
             const geoLink = document.createElement("a")
-            geoLink.innerText = toFixedIfNecessary(parseFloat(_value), 4)
+            geoLink.innerText = formatValue(_value,5);
             geoLink.href = `geo:${data["latitude"]},${data["longitude"]}`
             fieldValue.appendChild(geoLink)
+        
         } else {
-            fieldValue.innerText = toFixedIfNecessary(parseFloat(_value), 4)
+            fieldValue.innerText = formatValue(_value,4);
 
         }
         field.appendChild(fieldValue)
@@ -161,6 +178,14 @@ function getSampleRate(){
     throw "Invalid Wenet version"
 }
 
+function getLogLevel(){
+    if ( document.getElementById("debug").checked) {
+        return 0
+    } else {
+        return 20
+    }
+}
+
 function getBaudRate(){
     if (document.getElementById("wenet_version").value == '1') {
         return 115177;
@@ -209,7 +234,8 @@ function start_wenet() {
                     "config": {
                         "rs232_framing": rs232_frame,
                         "samplerate": getSampleRate(),
-                        "baudrate": getBaudRate()
+                        "baudrate": getBaudRate(),
+                        "loglevel": getLogLevel(),
                     }
                 });
                 return
@@ -222,8 +248,15 @@ function start_wenet() {
                 addText(event.data.args)
                 return
             }
+            if (event.data.type == "secondary"){
+                // Secondary payload messages can flood the log.
+                if ( document.getElementById("debug").checked) {
+                    addText(event.data.args)
+                }
+                return
+            }
             if (event.data.type == "gps") {
-                addFrameWeNet(event.data.args)
+                addFrameWenet(event.data.args)
                 updatePlotsWenet(event.data.args)
                 if (last_callsign) {
                     globalThis.updateMarker(
@@ -293,11 +326,11 @@ function start_wenet() {
                     
                 }
 
-                if (event.data.time.getTime() == last_sent.getTime()) {
+                if (event.data.time == undefined || event.data.time.getTime() == last_sent.getTime()) {
                     // got the last message back, reset latency to 0 to reset any delay
                     // this is a bit of a hack to keep slow clients working by only sending chunks (2s?) of RF to the modem
                     latency = 0
-                }
+                } 
 
                 return
             }
