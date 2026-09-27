@@ -3,7 +3,6 @@ from pyodide.ffi import to_js
 from pyodide.ffi import create_proxy
 from js import document, rx_packet, updateStats, navigator
 import datetime
-from webhorus import demod
 from horusdemodlib.decoder import decode_packet
 from horusdemodlib.demod import HorusLib
 from horusdemodlib.utils import telem_to_sondehub, fix_datetime
