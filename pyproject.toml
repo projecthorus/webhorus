@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "webhorus"
-version = "0.2.10"
+version = "0.2.11"
 description = ""
 authors = ["xssfox <xss@sprocketfox.io>"]
 readme = "README.md"
@@ -18,12 +18,13 @@ generate-setup-file = true
 
 [tool.poetry.dependencies]
 python = "^3.13"
+
+# Required for building pywenet
 cffi = "^1.17.1"
-requests = "^2.32.3"
-asn1tools = "0.165.0"
-cbor2 = "5.9.0"
+
+# Work around for https://github.com/dateutil/dateutil/issues/1430
 six = "1.5"
-python-dateutil = "^2.9.0.post0"
+
 horusdemodlib = "^0.6.2"
 
 [tool.poetry.group.dev.dependencies]
