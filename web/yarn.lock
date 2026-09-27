@@ -4744,13 +4744,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pyodide@npm:^0.29.0":
-  version: 0.29.0
-  resolution: "pyodide@npm:0.29.0"
+"pyodide@npm:^0.29.5":
+  version: 0.29.5
+  resolution: "pyodide@npm:0.29.5"
   dependencies:
     "@types/emscripten": "npm:^1.41.4"
     ws: "npm:^8.5.0"
-  checksum: 10c0/c24c22e4c9f6da78813705b066e9dc2b39e70d2014ff3fe5a9fa14077cdb843f741bb5302c30f60fd043c5873bb808b6abe7cd5508f5b3699067d858c7ee81d8
+  checksum: 10c0/377cf0f3afb27c226f059cc0abc48fa5737fafc19432f3e14087cc956554b5819185632a04403db85d2cd9ff81e457354ecdf6f6275a379af858425021d00b29
   languageName: node
   linkType: hard
 
@@ -6167,7 +6167,7 @@ __metadata:
     glob: "npm:^13.0.6"
     leaflet: "npm:^1.9.4"
     plotly.js-dist-min: "npm:^4.1.1"
-    pyodide: "npm:^0.29.0"
+    pyodide: "npm:^0.29.5"
     rollup-plugin-copy: "npm:^3.5.0"
     sass-embedded: "npm:^1.105.0"
     vite: "npm:^8.3.1"
