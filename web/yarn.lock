@@ -4681,10 +4681,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plotly.js-dist-min@npm:^3.7.0":
-  version: 3.7.0
-  resolution: "plotly.js-dist-min@npm:3.7.0"
-  checksum: 10c0/dd13c85650a35e9712fa85acd9a9bde568c47d8d850c97106c8e7e3ee3e46d65d930165ff5801b63f13cff7cac32b567e04cf465273f7efebf5d0d56741e17a5
+"plotly.js-dist-min@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "plotly.js-dist-min@npm:4.1.1"
+  checksum: 10c0/a4c76fb0591930e701606e2cd57dbec4d148bf960103f2a7f58e7c88f41e22c2051d0d53ae6c7f0be58b5d508c774c4d79922a6862f8fe564a37adc0205ee821
   languageName: node
   linkType: hard
 
@@ -6166,7 +6166,7 @@ __metadata:
     esbuild: "npm:^0.28.2"
     glob: "npm:^13.0.6"
     leaflet: "npm:^1.9.4"
-    plotly.js-dist-min: "npm:^3.7.0"
+    plotly.js-dist-min: "npm:^4.1.1"
     pyodide: "npm:^0.29.0"
     rollup-plugin-copy: "npm:^3.5.0"
     sass-embedded: "npm:^1.105.0"
