@@ -1576,6 +1576,146 @@ globalThis.updateZScaleFromBuffer = function() {
 }
 
 
+// storage
+let db;
+let objectStore;
+const request = indexedDB.open("data", 3);
+
+request.onerror = (event) => {
+  log_entry(`Received user location`, "danger")
+};
+request.onsuccess = (event) => {
+  db = event.target.result;
+};
+
+request.onupgradeneeded = (event) => {
+  // Save the IDBDatabase interface
+  const db = event.target.result;
+
+  // Create an objectStore for this database
+  objectStore = db.createObjectStore("logs", { autoIncrement: true });
+  objectStore.createIndex("callsign", "callsign", { unique: false });
+  objectStore.createIndex("date", "date", { unique: false });
+
+  objectStore.transaction.oncomplete = (event) => {
+    log_entry(`Database upgraded`, "light")
+  }
+};
+
+globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats){
+    if (db){
+        const logObjectStore = db.transaction("logs", "readwrite").objectStore("logs");
+        logObjectStore.add({
+            "callsign": callsign,
+            "date": (new Date()).getTime(),
+            "data": raw_data,
+            "sondehub": sondehub_data,
+            "modem_stats": modem_stats
+        })
+    }
+}
+
+
+globalThis.refreshLogCalls = function(){
+    db.transaction("logs","readonly")
+    .objectStore("logs").index("callsign")
+    .getAll({"direction": "nextunique"})
+    .onsuccess = function(result){
+        var log_payload = document.getElementById("log_payload")
+        log_payload.innerHTML=""
+
+        var tf = document.getElementById("log_timeframe")
+        tf.innerHTML=""
+        
+        // todo add to html
+        result.target.result.map((x)=>{
+            var opt = document.createElement("option")
+            opt.value=x.callsign
+            opt.innerText=x.callsign
+            log_payload.appendChild(opt)
+        })
+        globalThis.refreshTimes();
+    }
+}
+
+globalThis.refreshTimes = function(){
+    var callsign = document.getElementById("log_payload").value
+    var tf = document.getElementById("log_timeframe")
+    tf.innerHTML=""
+    db.transaction("logs","readonly")
+    .objectStore("logs").index("callsign")
+    .getAll(callsign)
+    .onsuccess = function(result){
+
+        const MAX_GAP = 3 * 60 * 60 * 1000 // 3 hours
+
+        var last = 0;
+        var opt
+
+        
+
+        result.target.result.map((x)=>{
+            if (x.date > last + MAX_GAP ){
+                if (opt) { // finish the last set element before making a new one
+                    opt.value = opt.value + "-" + last
+                    opt.innerText=opt.innerText + " - " + new Date(last).toISOString()
+                }
+                opt = document.createElement("option")
+                opt.value=x.date
+                opt.innerText=new Date(x.date).toISOString()
+                tf.appendChild(opt)
+            }
+            last = x.date
+        })
+
+        // Final item
+        if (opt) { // finish the last set element before making a new one
+            opt.value = opt.value + "-" + last
+            opt.innerText=opt.innerText + " - " + new Date(last).toISOString()
+        }
+
+        result.target.result
+        
+    }
+}
+
+globalThis.log_download = function() {
+    var callsign = document.getElementById("log_payload").value
+    var tf = document.getElementById("log_timeframe")
+
+    var from = Number(tf.value.split("-")[0])
+    var to = Number(tf.value.split("-")[1])
+
+    db.transaction("logs","readonly")
+    .objectStore("logs").index("callsign")
+    .getAll(callsign)
+    .onsuccess = function(result){
+        var results = result.target.result.filter((x)=>{
+            if (x.date > from && x.date < to){
+                return true
+            }
+            return false
+        }).map((x)=>{
+            if (x.data){
+                x.data = x.data.toBase64()
+            }
+            return x
+        })
+
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(results)));
+        element.setAttribute('download', callsign + "-" + new Date(from).toISOString()+ "-" + new Date(to).toISOString()+".json");
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+}
+
+
 globalThis.loadSettings();
 
 
@@ -1584,3 +1724,5 @@ settings_loaded = true
 loadMapPicker()
 loadTrackMap()
 init_python();
+
+

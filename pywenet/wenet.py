@@ -44,18 +44,18 @@ class Wenet():
                 if packet_type == WENET_PACKET_TYPES.IDLE:
                     continue
                 elif packet_type == WENET_PACKET_TYPES.TEXT_MESSAGE:
-                    return ["log",self.log_packet(packet)]
+                    return [packet,"log",self.log_packet(packet)]
                     
                 elif packet_type == WENET_PACKET_TYPES.SEC_PAYLOAD_TELEMETRY:
-                    return ["secondary",self.log_packet(packet)]
+                    return [packet,"secondary",self.log_packet(packet)]
                 
                 elif packet_type == WENET_PACKET_TYPES.GPS_TELEMETRY: # this goes to sondehub
                     logging.debug(WenetPackets.gps_telemetry_decoder(packet))
-                    return(["gps",WenetPackets.gps_telemetry_decoder(packet)])
+                    return([packet,"gps",WenetPackets.gps_telemetry_decoder(packet)])
                 elif packet_type == WENET_PACKET_TYPES.ORIENTATION_TELEMETRY:
-                    return ["log",self.log_packet(packet)]
+                    return [packet,"log",self.log_packet(packet)]
                 elif packet_type == WENET_PACKET_TYPES.IMAGE_TELEMETRY:
-                    return ["log",self.log_packet(packet)]
+                    return [packet,"log",self.log_packet(packet)]
 
                 elif packet_type == WENET_PACKET_TYPES.SSDV:
                     packet_info = ssdv_packet_info(packet)
@@ -94,7 +94,9 @@ class Wenet():
                         if self.current_packet_count % self.partialupdate == 0:
 
                             image_output = self.img_data.image
-                            return_image = ["image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
+                            return_image = [packet,"image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
                             self.upload_buffer = []
                     if return_image:
                         return return_image
+                else:
+                    [packet, "debug"]

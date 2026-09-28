@@ -240,6 +240,13 @@ function start_wenet() {
                 });
                 return
             }
+
+            if (event.data.raw){
+                if (last_callsign) {
+                    globalThis.logData(last_callsign,event.data.raw)
+                }
+            }
+
             if (event.data.type == "image") {
                 addImage(...event.data.args)
                 return

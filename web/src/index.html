@@ -18,727 +18,797 @@
 <body>
 
     <div id="loaded" class="d-none">
-    <header>
+        <header>
 
-    </header>
-    <nav class="navbar fixed-top navbar-light navbar-expand-md">
-        <div class="container-flex" style="width:100vw">
-            <div class="row">
-                <div class="col-auto">
+        </header>
+        <nav class="navbar fixed-top navbar-light navbar-expand-md">
+            <div class="container-flex" style="width:100vw">
+                <div class="row">
+                    <div class="col-auto">
 
-                    <a class="navbar-brand ps-4 me-0" href="#" id="webtitle">webhorus</a>
-                    <span class="small" id="version">v0.0</span>
- 
-                    
-                    <button id="audio_start" class="btn btn-primary" onclick="startAudio()"
-                        disabled="true">Loading</button>
-                    <span id="wenet_latency"></span>
-                </div>
-                <div class="col-auto ms-auto  pe-4">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse nav-pills col-auto justify-content-end pe-4" id="navbar">
-                    <ul class="navbar-nav  mb-lg-0" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="about-tab" data-bs-toggle="tab"
-                                data-bs-target="#about-tab-pane" aria-controls="about-tab-pane" aria-selected="true"
-                                onclick='document.getElementById("navbar").classList.remove("show")'>Home</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config-tab-pane"
-                                onclick='document.getElementById("navbar").classList.remove("show")'
-                                aria-controls="config-tab-pane" aria-selected="false">Config</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="frames-tab" data-bs-toggle="tab" data-bs-target="#frames-tab-pane"
-                                aria-controls="frames-tab-pane" aria-selected="false"
-                                onclick='document.getElementById("navbar").classList.remove("show")'>Receive</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane"
-                                aria-controls="map-tab-pane" aria-selected="false"
-                                onclick='trackMap.invalidateSize();document.getElementById("navbar").classList.remove("show");'>Map</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="plots-tab" data-bs-toggle="tab" data-bs-target="#plots-tab-pane"
-                                aria-controls="plots-tab-pane" aria-selected="false"
-                                onclick='Plotly.Plots.resize("plots");document.getElementById("navbar").classList.remove("show")'>Plots</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="log-tab" data-bs-toggle="tab" data-bs-target="#log-tab-pane"
-                                type="a" role="tab" aria-controls="log-tab-pane" aria-selected="false"
-                                onclick='document.getElementById("navbar").classList.remove("show")'>Logs</a>
-                        </li>
-                    </ul>
+                        <a class="navbar-brand ps-4 me-0" href="#" id="webtitle">webhorus</a>
+                        <span class="small" id="version">v0.0</span>
 
+
+                        <button id="audio_start" class="btn btn-primary" onclick="startAudio()"
+                            disabled="true">Loading</button>
+                        <span id="wenet_latency"></span>
+                    </div>
+                    <div class="col-auto ms-auto  pe-4">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+                            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse nav-pills col-auto justify-content-end pe-4" id="navbar">
+                        <ul class="navbar-nav  mb-lg-0" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="about-tab" data-bs-toggle="tab"
+                                    data-bs-target="#about-tab-pane" aria-controls="about-tab-pane" aria-selected="true"
+                                    onclick='document.getElementById("navbar").classList.remove("show")'>Home</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="config-tab" data-bs-toggle="tab"
+                                    data-bs-target="#config-tab-pane"
+                                    onclick='document.getElementById("navbar").classList.remove("show")'
+                                    aria-controls="config-tab-pane" aria-selected="false">Config</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="frames-tab" data-bs-toggle="tab"
+                                    data-bs-target="#frames-tab-pane" aria-controls="frames-tab-pane"
+                                    aria-selected="false"
+                                    onclick='document.getElementById("navbar").classList.remove("show")'>Receive</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane"
+                                    aria-controls="map-tab-pane" aria-selected="false"
+                                    onclick='trackMap.invalidateSize();document.getElementById("navbar").classList.remove("show");'>Map</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="plots-tab" data-bs-toggle="tab" data-bs-target="#plots-tab-pane"
+                                    aria-controls="plots-tab-pane" aria-selected="false"
+                                    onclick='Plotly.Plots.resize("plots");document.getElementById("navbar").classList.remove("show")'>Plots</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="log-tab" data-bs-toggle="tab" data-bs-target="#log-tab-pane"
+                                    type="a" role="tab" aria-controls="log-tab-pane" aria-selected="false"
+                                    onclick='document.getElementById("navbar").classList.remove("show")'>Logs</a>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
-            </div>
-            <div class="row w-90 pt-2">
-                <span id="alert"></span>
-                <div class="progress position-relative ms-auto me-auto col-11 ps-0 pe-0">
-                    <div id="dbfs" class="progress-bar" role="progressbar" style="width: 0%;">
-                        <span id="dbfstext" class="justify-content-center d-flex position-absolute w-100">-999
-                            dBFS</span>
+                <div class="row w-90 pt-2">
+                    <span id="alert"></span>
+                    <div class="progress position-relative ms-auto me-auto col-11 ps-0 pe-0">
+                        <div id="dbfs" class="progress-bar" role="progressbar" style="width: 0%;">
+                            <span id="dbfstext" class="justify-content-center d-flex position-absolute w-100">-999
+                                dBFS</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </nav>
+        </nav>
 
-    <!-- Begin page content -->
-    <main role="main" class="container gap-4 d-grid ">
+        <!-- Begin page content -->
+        <main role="main" class="container gap-4 d-grid ">
 
-        <div class="tab-content" id="appTabs">
-            <div id="spectrum" class="col-md-12 plotlyhack"></div>
-            <div class="tab-pane show active justify-content-center" id="about-tab-pane" role="tabpanel" tabindex="0">
-                <div class="row mt-3">
-                    <div class="col-auto mb-2">
-                        <p>
-                            webhorus is an experimental receiver for horusbinary balloon telemetry. Audio in Javascript
-                            is
-                            very hard to support across multiple devices and platforms.
-                            As such please don't rely on this working reliably. Consider using <a
-                                href="https://github.com/projecthorus/horus-gui">Horus-GUI</a> where possible. Ensure
-                            receiver testing has been done prior to launching any balloon.
-                        </p>
-                        <p>
-                            A writeup on how this project was created is found on <a
-                                href="https://sprocketfox.io/xssfox/2025/03/07/webhorus/">my (xssfox) blog</a>.
-                        </p>
-                        <p>
-                            The source code of webhorus can be found on the <a
-                                href="https://github.com/projecthorus/webhorus">Project Horus GitHub</a>
-                        </p>
-                        <p>
-                            RTL-SDR is only available on browsers that support Web USB API which currently is only
-                            Chrome and Chrome based browsers. RTL-SDR support is provided through the extremely well
-                            written libraries by <a href="https://jacobo.tarrio.org/">Jacobo Tarrío</a> from their <a
-                                href="https://radio.ea1iti.es/">Radio Receiver</a> project. Wenet can also be decoded by
-                            selecting "RTL-SDR (Wenet)" in the General Configuration.
-                        </p>
-                        <div class="alert alert-warning">Windows users intending to use RTL-SDR input need to ensure
-                            that the WinUSB driver is installed for the RTL-SDR device. This can be done using the <a
-                                href="https://zadig.akeo.ie">Zadig</a> tool. If your SDR works in SDR#, SDR++ and other
-                            SDR tools then you or the tool has probably already done this.
-                        </div>
-                        <div class="alert alert-warning">Issues have been reported when using Firefox/Gecko based
-                            browsers
-                            on some Android devices including but not limited to Motorola. It could be related to this
-                            bug
-                            listed on Mozilla's <a
-                                href="https://bugzilla.mozilla.org/show_bug.cgi?id=1873199">bugtracker</a>. Users have
-                            reported success using Chrome/Chromium based browsers instead.
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="tab-pane justify-content-center mt-3" id="config-tab-pane" role="tabpanel" tabindex="0">
-                <div class="accordion" id="configAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingGeneral">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseGeneral" aria-expanded="true" aria-controls="collapseGeneral">
-                                General Configuration
-                            </button>
-                        </h2>
-                        <div id="collapseGeneral" class="accordion-collapse collapse show"
-                            aria-labelledby="headingGeneral" data-bs-parent="#configAccordion">
-                            <div class="accordion-body row align-items-center">
-
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="callsign">Uploader
-                                            Callsign</label>
-                                        <input class="form-control" id="callsign" placeholder="" value="N0CALL"
-                                            onchange="saveSettings()">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="uploader_antenna">Uploader
-                                            Antenna</label>
-                                        <input class="form-control" id="uploader_antenna" placeholder=""
-                                            onchange="saveSettings()">
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="uploader_lat">Uploader
-                                            Latitude</label>
-                                        <div class="input-group">
-                                            <input class="form-control" id="uploader_lat" placeholder=""
-                                                onchange="saveSettings()" type="number" inputmode="decimal">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#mapPickerModal" onclick="geoload()"
-                                                style="padding-top: 0.5px;">
-                                                &target;
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="uploader_lon">Uploader
-                                            Longitude</label>
-                                        <div class="input-group">
-                                            <input class="form-control" id="uploader_lon" placeholder=""
-                                                onchange="saveSettings()" type="number" inputmode="decimal">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#mapPickerModal" style="padding-top: 0.5px;">
-                                                &target;
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="uploader_alt">Uploader
-                                            Altitude (m)</label>
-                                        <input class="form-control" id="uploader_alt" placeholder=""
-                                            onchange="saveSettings()" type="number" inputmode="decimal" value="0">
-                                    </div>
-                                </div>
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="radioType">Mode</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioType"
-                                                id="radioAudio" value="radioAudio" checked
-                                                onchange="saveSettings();updateRadio();">
-                                            <label class="form-check-label" for="radioAudio">
-                                                Horus Binary (Audio input)
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioType" id="radioRTL"
-                                                disabled value="radioRTL" onchange="saveSettings();updateRadio();">
-                                            <label class="form-check-label" for="radioRTL">
-                                                Horus Binary (RTL-SDR)
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioType"
-                                                id="radioWenet" disabled value="radioWenet"
-                                                onchange="saveSettings();updateRadio();">
-                                            <label class="form-check-label" for="radioWenet">
-                                                Wenet (RTL-SDR)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label">SondeHub settings</label>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked id="upload_sondehub"
-                                                onclick="saveSettings()" onchange="saveSettings()">
-                                            <label class="form-check-label " for="upload_sondehub">Upload to
-                                                SondeHub</label>
-
-                                        </div>
-                                    </div>
-                                    <div class="col mb-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="uploader_position"
-                                                onclick="saveSettings()" onchange="saveSettings()">
-                                            <label class="form-check-label " for="uploader_position">Upload station
-                                                position</label>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label">Other settings</label>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="debug"
-                                                onclick="saveSettings();" onchange="saveSettings();">
-                                            <label class="form-check-label " for="debug">Debug logs</label>
-
-                                        </div>
-                                    </div>
-                                   
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="fft_rate">FFT update rate (ms)</label>
-                                        <input class="form-control" id="fft_rate" placeholder=""
-                                            onchange="saveSettings()" type="number" inputmode="decimal" value="500">
-                                    </div>
-                                </div>
-
+            <div class="tab-content" id="appTabs">
+                <div id="spectrum" class="col-md-12 plotlyhack"></div>
+                <div class="tab-pane show active justify-content-center" id="about-tab-pane" role="tabpanel"
+                    tabindex="0">
+                    <div class="row mt-3">
+                        <div class="col-auto mb-2">
+                            <p>
+                                webhorus is an experimental receiver for horusbinary balloon telemetry. Audio in
+                                Javascript
+                                is
+                                very hard to support across multiple devices and platforms.
+                                As such please don't rely on this working reliably. Consider using <a
+                                    href="https://github.com/projecthorus/horus-gui">Horus-GUI</a> where possible.
+                                Ensure
+                                receiver testing has been done prior to launching any balloon.
+                            </p>
+                            <p>
+                                A writeup on how this project was created is found on <a
+                                    href="https://sprocketfox.io/xssfox/2025/03/07/webhorus/">my (xssfox) blog</a>.
+                            </p>
+                            <p>
+                                The source code of webhorus can be found on the <a
+                                    href="https://github.com/projecthorus/webhorus">Project Horus GitHub</a>
+                            </p>
+                            <p>
+                                RTL-SDR is only available on browsers that support Web USB API which currently is only
+                                Chrome and Chrome based browsers. RTL-SDR support is provided through the extremely well
+                                written libraries by <a href="https://jacobo.tarrio.org/">Jacobo Tarrío</a> from their
+                                <a href="https://radio.ea1iti.es/">Radio Receiver</a> project. Wenet can also be decoded
+                                by
+                                selecting "RTL-SDR (Wenet)" in the General Configuration.
+                            </p>
+                            <div class="alert alert-warning">Windows users intending to use RTL-SDR input need to ensure
+                                that the WinUSB driver is installed for the RTL-SDR device. This can be done using the
+                                <a href="https://zadig.akeo.ie">Zadig</a> tool. If your SDR works in SDR#, SDR++ and
+                                other
+                                SDR tools then you or the tool has probably already done this.
                             </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item" id="audioSection">
-                        <h2 class="accordion-header" id="headingAudio">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseAudio" aria-expanded="false" aria-controls="collapseTwo">
-                                Audio Configuration
-                            </button>
-                        </h2>
-                        <div id="collapseAudio" class="accordion-collapse collapse" aria-labelledby="headingAudio"
-                            data-bs-parent="#configAccordion">
-                            <div class="accordion-body row align-items-center">
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="sound_adapter">Sound
-                                            input</label>
-                                        <select class="form-control form-select" id="sound_adapter"
-                                            onchange="snd_change()" placeholder="" disabled>
-                                            <option value="placeholder" selected id="snd_ph">Click start first
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="uploader_radio">Uploader
-                                            Radio</label>
-                                        <input class="form-control" id="uploader_radio" placeholder=""
-                                            onchange="saveSettings()">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="dial">Dial Frequency
-                                            (MHz)</label>
-                                        <input class="form-control" id="dial" placeholder="" onchange="saveSettings()"
-                                            type="number" inputmode="decimal">
-                                    </div>
-                                </div>
+                            <div class="alert alert-warning">Issues have been reported when using Firefox/Gecko based
+                                browsers
+                                on some Android devices including but not limited to Motorola. It could be related to
+                                this
+                                bug
+                                listed on Mozilla's <a
+                                    href="https://bugzilla.mozilla.org/show_bug.cgi?id=1873199">bugtracker</a>. Users
+                                have
+                                reported success using Chrome/Chromium based browsers instead.
                             </div>
 
                         </div>
-                    </div>
-                    <div class="accordion-item d-none" id="rtlSection">
-                        <h2 class="accordion-header" id="headingRtl">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseRTL" aria-expanded="false" aria-controls="collapseThree">
-                                RTL SDR Configuration
-                            </button>
-                        </h2>
-                        <div id="collapseRTL" class="accordion-collapse collapse" aria-labelledby="headingRtl"
-                            data-bs-parent="#configAccordion">
-                            <div class="accordion-body row align-items-center">
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="rtl_freq">RTL Frequency
-                                            (MHz)</label>
-                                        <input class="form-control" step="0.001" id="rtl_freq" placeholder=""
-                                            onchange="saveSettings();rtlFreq();" type="number" inputmode="decimal"
-                                            value="434.199">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="ppm">RTL PPM frequency
-                                            correction</label>
-                                        <input class="form-control" id="ppm" step="1" placeholder=""
-                                            onchange="saveSettings();updatePPM();" type="number" inputmode="decimal"
-                                            value="0">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="gain">RTL Gain
-                                            (db)</label>
-                                        <div class="row">
-                                            <input type="range" class="form-range " min="-0.5" max="50" step="0.5"
-                                                value="-0.5" id="gain" oninput="saveSettings(); updateGain();">
-                                        </div>
-                                        <div class="row">
-                                            <input class="form-control" id="gaindb" placeholder="" disabled="disabled"
-                                                value="3db">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <!-- <label class="form-label col-form-label">Other settings</label> -->
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="rtlaudio"
-                                                onclick="saveSettings();rtlaudio()"
-                                                onchange="saveSettings();rtlaudio()">
-                                            <label class="form-check-label " for="rtlaudio">Listen to audio (may be
-                                                loud)</label>
-
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="rtlbiast"
-                                                onclick="saveSettings();updateBiasT()"
-                                                onchange="saveSettings();updateBiasT()">
-                                            <label class="form-check-label " for="rtlbiast">Enable Bias T</label>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item" id="horusSection">
-                        <h2 class="accordion-header" id="headingHorus">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseHorus" aria-expanded="false" aria-controls="collapseHorus">
-                                Horus Binary Configuration
-                            </button>
-                        </h2>
-                        <div id="collapseHorus" class="accordion-collapse collapse" aria-labelledby="headingHorus"
-                            data-bs-parent="#configAccordion">
-                            <div class="accordion-body row align-items-center">
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="tone_spacing">Tone
-                                            Spacing</label>
-                                        <input class="form-control" id="tone_spacing" placeholder=""
-                                            onchange="updateToneSpacing()" type="number" inputmode="decimal"
-                                            value="270">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="baud">Baud rate</label>
-                                        <select id="baud" class="form-select"  onchange="updateBaudRate()" aria-label="Baud Rate">
-                                            <option value="50" >50</option>
-                                            <option value="100" selected>100 (default)</option>
-                                            <option value="300">300</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item" id="wenetSection">
-                        <h2 class="accordion-header" id="headingWenet">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseWenet" aria-expanded="false" aria-controls="collapseWenet">
-                                Wenet Configuration
-                            </button>
-                        </h2>
-                        <div id="collapseWenet" class="accordion-collapse collapse" aria-labelledby="headingWenet"
-                            data-bs-parent="#configAccordion">
-                            <div class="accordion-body row align-items-center">
-                                <div class="col-md-4">
-                                    <div class="col mb-2">
-                                        <label class="form-label col-form-label" for="wenet_version">Wenet
-                                            Version</label>
-                                        <select id="wenet_version" class="form-select" aria-label="Wenet mode"
-                                            onchange="saveSettings();update_wenet();">
-                                            <option value="1">Wenet Traditional (115177 UART)</option>
-                                            <option value="2" selected>Wenet v2 (96000 I2S)</option>
-                                        </select>
-                                        <div id="passwordHelpBlock" class="form-text">
-                                            If unsure or unknown select "Wenet v2"
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+                <div class="tab-pane justify-content-center mt-3" id="config-tab-pane" role="tabpanel" tabindex="0">
+                    <div class="accordion" id="configAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingGeneral">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseGeneral" aria-expanded="true"
+                                    aria-controls="collapseGeneral">
+                                    General Configuration
+                                </button>
+                            </h2>
+                            <div id="collapseGeneral" class="accordion-collapse collapse show"
+                                aria-labelledby="headingGeneral" data-bs-parent="#configAccordion">
+                                <div class="accordion-body row align-items-center">
 
-
-            </div>
-
-            <div class="tab-pane justify-content-center" id="frames-tab-pane" role="tabpanel" tabindex="0">
-
-
-
-                <div id="snr" class="col-md-12 plotlyhack">
-                </div>
-                <div class="col-md-12" style="position:relative;">
-
-                    <div id="frames">
-                    </div>
-
-                </div>
-            </div>
-            <div class="tab-pane justify-content-center" id="map-tab-pane" role="tabpanel" tabindex="0">
-                <div class="col-md-12" id="trackMap">
-                </div>
-            </div>
-
-
-            <div class="tab-pane justify-content-center" id="plots-tab-pane" role="tabpanel" tabindex="0">
-                <div id="plots" class="col-md-12 plotlyhack">
-                </div>
-            </div>
-
-            <div class="tab-pane justify-content-center" id="log-tab-pane" role="tabpanel" tabindex="0">
-                <div id="rx_log" class="col-md-12">
-
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="modal fade" tabindex="-1" id="wizard">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="wizard_title">Configuration Wizard</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            <b>Frequency: </b> <span id="wizard_freq">420.69</span><br>
-                            <b>Dial frequency: </b> <span id="wizard_dial_freq">420.69</span><br>
-                            <b>Mode: </b> <span id="wizard_mode">Horus</span><br>
-                            <span id="wizard_tonespacing_enable" class="d-none"><b>Tone spacing: </b> <span
-                                    id="wizard_tonespacing">1</span></span><br>
-                            <span id="wizard_baud_enable" class="d-none"><b>Baud: </b> <span
-                                    id="wizard_baud">1</span></span><br>
-                        </p>
-                        <hr>
-                        <form>
-                            <h6 class="mt-3">Receiver type</h6>
-                            <div class="mb-3">
-                                <div class="btn-group w-100" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="wizard_receiver" id="wizard_soundcard"
-                                        autocomplete="off">
-                                    <div class="btn btn-outline-primary dropdown w-50">
-
-                                        <label style="z-index:unset !important" id="wizard_soundcard_label"
-                                            class="dropdown-toggle text-truncate w-100" for="wizard_soundcard" data-bs-toggle="dropdown"
-                                            aria-expanded="false" onclick="getWizardSoundDevices()">Sound Card</label>
-                                        <ul class="dropdown-menu" id="wizard_sound_devices">
-                                            <li><a class="dropdown-item" disabled>Please click allow on the prompt for
-                                                    microphone access</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <input type="radio" class="btn-check" name="wizard_receiver" id="wizard_rtlsdr"
-                                        autocomplete="off" disabled onclick="setWizardRTL()">
-                                    <label style="z-index:unset !important" class="btn btn-outline-primary"
-                                        for="wizard_rtlsdr">RTL-SDR</label>
-                                </div>
-                                <div class="alert alert-danger mt-3 d-none" role="alert" id="wizard_no_usb">
-                                    This browser does not support USB. Wenet cannot only be received using an RTL-SDR via USB. Try a Chrome/Chromium based browser.
-                                </div>
-                            </div>
-                            <div id="wizard_hidden" class="d-none">
-                                <hr>
-                                <h6 class="mt-3">Radio configuration</h6>
-                                <p id="wizard_instructions">Set your radio to ....</p>
-                                <div id="wizard_rtl_config" class="d-none mb-3">
-                                    <p>If unsure, leave PPM as 0, Bias-T as disabled and gain set to Auto (all the way
-                                        to
-                                        the left)</p>
-                                    <div class="alert alert-warning d-none" role="alert" id="wizard_windows_warning">
-                                        Windows users require a one time driver setup for the RTL-SDR to work correctly. Follow <a href="https://github.com/projecthorus/webhorus/wiki/Web-wenet-Tutorial#windows-users">this guide to configure the correct drivers.</a>
-                                    </div>    
-                                    <div class="alert alert-warning d-none" role="alert" id="wizard_linux_warning">
-                                        Linux users may require unloading the DVB drivers before RTL-SDR will work correctly in the browser. Follow <a href="https://github.com/projecthorus/webhorus/wiki/Web-wenet-Tutorial#linux-users">this guide to ensure DVB drivers are unloaded.</a>
-                                    </div>    
-                                    <div class="row mb-2">
-                                        <div class="input-group">
-                                            <div class="input-group-text" for="wizard_ppm">PPM frequency
-                                                correction</div>
-                                            <input class="form-control" id="wizard_ppm" step="1" placeholder=""
-                                                type="number" inputmode="decimal" value="0">
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="callsign">Uploader
+                                                Callsign</label>
+                                            <input class="form-control" id="callsign" placeholder="" value="N0CALL"
+                                                onchange="saveSettings()">
                                         </div>
                                     </div>
-                                    <div class="row mb-2">
-                                        <div class="input-group">
-                                            <div class="input-group-text " for="wizard_gain">Gain
-                                                (db)</div>
 
-                                            <input id="wizard_gaindb" class="form-control " placeholder=""
-                                                disabled="disabled" value="3db">
-
-                                            <input type="range" class="form-range form-control w-50" min="-0.5" max="50"
-                                                step="0.5" value="-0.5" id="wizard_gain"
-                                                style="height: auto; padding-left:8px;padding-right:8px;"
-                                                oninput="wizardUpdateGain();">
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="uploader_antenna">Uploader
+                                                Antenna</label>
+                                            <input class="form-control" id="uploader_antenna" placeholder=""
+                                                onchange="saveSettings()">
                                         </div>
                                     </div>
-                                    <div class="row mb-2">
-                                        <div class="col-auto">
-                                            <input class="form-check-input" type="checkbox" id="wizard_rtlbiast">
-                                            <label class="form-check-label " for="wizard_rtlbiast">Enable Bias T</label>
+
+
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="uploader_lat">Uploader
+                                                Latitude</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="uploader_lat" placeholder=""
+                                                    onchange="saveSettings()" type="number" inputmode="decimal">
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#mapPickerModal" onclick="geoload()"
+                                                    style="padding-top: 0.5px;">
+                                                    &target;
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <hr>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="uploader_lon">Uploader
+                                                Longitude</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="uploader_lon" placeholder=""
+                                                    onchange="saveSettings()" type="number" inputmode="decimal">
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#mapPickerModal" style="padding-top: 0.5px;">
+                                                    &target;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="uploader_alt">Uploader
+                                                Altitude (m)</label>
+                                            <input class="form-control" id="uploader_alt" placeholder=""
+                                                onchange="saveSettings()" type="number" inputmode="decimal" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="radioType">Mode</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="radioType"
+                                                    id="radioAudio" value="radioAudio" checked
+                                                    onchange="saveSettings();updateRadio();">
+                                                <label class="form-check-label" for="radioAudio">
+                                                    Horus Binary (Audio input)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="radioType"
+                                                    id="radioRTL" disabled value="radioRTL"
+                                                    onchange="saveSettings();updateRadio();">
+                                                <label class="form-check-label" for="radioRTL">
+                                                    Horus Binary (RTL-SDR)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="radioType"
+                                                    id="radioWenet" disabled value="radioWenet"
+                                                    onchange="saveSettings();updateRadio();">
+                                                <label class="form-check-label" for="radioWenet">
+                                                    Wenet (RTL-SDR)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label">SondeHub settings</label>
 
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" checked
+                                                    id="upload_sondehub" onclick="saveSettings()"
+                                                    onchange="saveSettings()">
+                                                <label class="form-check-label " for="upload_sondehub">Upload to
+                                                    SondeHub</label>
 
-                                <div class="accordion" id="accordionWizardUploader">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="wizard_upload_info_heading">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#wizardUpInfo" aria-expanded="true"
-                                                aria-controls="wizardUpInfo">
-                                                Your station information (optional)
-                                            </button>
-                                        </h2>
-                                        <div id="wizardUpInfo" class="accordion-collapse collapse "
-                                            aria-labelledby="wizard_upload_info_heading"
-                                            data-bs-parent="#accordionWizardUploader">
-                                            <div class="accordion-body">
-
-                                                <div class="mb-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text" for="wizard_callsign">
-                                                            Callsign
-                                                        </div>
-                                                        <input type="text" onkeyup="validateWizard()"
-                                                            onkeypress="validateWizard()" onchange="validateWizard()"
-                                                            class="form-control" id="wizard_callsign"
-                                                            placeholder="N0CALL (does not have to be a real callsign)">
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text" for="wizard_antenna">Antenna</div>
-                                                        <input type="text" class="form-control" id="wizard_antenna"
-                                                            placeholder="3 dbi omni (optional)">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-md-4  mb-2">
-                                                        <div class="input-group">
-                                                            <div class="input-group-text" for="wizard_uploader_lat">Lat
-                                                            </div>
-                                                            <input class="form-control" id="wizard_uploader_lat"
-                                                                placeholder="(optional)" type="number"
-                                                                inputmode="decimal">
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-toggle="modal" data-bs-target="#mapPickerModal"
-                                                                onclick="geoload()"
-                                                                style="padding-top: 0.5px; z-index:unset !important">
-                                                                &target;
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4  mb-2">
-                                                        <div class="input-group">
-                                                            <div class="input-group-text" for="wizard_uploader_lon">Lon
-                                                            </div>
-                                                            <input class="form-control" id="wizard_uploader_lon"
-                                                                placeholder="(optional)" type="number"
-                                                                inputmode="decimal">
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-toggle="modal" data-bs-target="#mapPickerModal"
-                                                                onclick="geoload()"
-                                                                style="padding-top: 0.5px; z-index:unset !important">
-                                                                &target;
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <div class="input-group">
-                                                            <div class="input-group-text" for="wizard_uploader_alt">Alt
-                                                                (m)</div>
-                                                            <input class="form-control" id="wizard_uploader_alt"
-                                                                placeholder="(optional)" type="number"
-                                                                inputmode="decimal" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col mb-2" id="wizard_receiver_model_input">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text" for="wizard_uploader_radio">
-                                                            Receiver model</div>
-                                                        <input class="form-control" id="wizard_uploader_radio"
-                                                            placeholder="eg. Icom IC-7100 (optional)" type="text">
-                                                    </div>
-                                                </div>
-
+                                            </div>
+                                        </div>
+                                        <div class="col mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="uploader_position"
+                                                    onclick="saveSettings()" onchange="saveSettings()">
+                                                <label class="form-check-label " for="uploader_position">Upload station
+                                                    position</label>
 
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label">Other settings</label>
 
-                                <hr>
-                                <h6 class="mt-3">Upload configuration</h6>
-                                <div class="row mb-2">
-                                    <div class="col-auto mb-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked
-                                                id="wizard_upload_sondehub">
-                                            <label class="form-check-label " for="wizard_upload_sondehub">Balloon data
-                                                to SondeHub</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="debug"
+                                                    onclick="saveSettings();" onchange="saveSettings();">
+                                                <label class="form-check-label " for="debug">Debug logs</label>
 
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="fft_rate">FFT update rate
+                                                (ms)</label>
+                                            <input class="form-control" id="fft_rate" placeholder=""
+                                                onchange="saveSettings()" type="number" inputmode="decimal" value="500">
                                         </div>
                                     </div>
-                                    <div class="col-auto mb-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked
-                                                id="wizard_uploader_position">
-                                            <label class="form-check-label " for="wizard_uploader_position">Upload your
-                                                position to SondeHub</label>
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" id="audioSection">
+                            <h2 class="accordion-header" id="headingAudio">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseAudio" aria-expanded="false" aria-controls="collapseTwo">
+                                    Audio Configuration
+                                </button>
+                            </h2>
+                            <div id="collapseAudio" class="accordion-collapse collapse" aria-labelledby="headingAudio"
+                                data-bs-parent="#configAccordion">
+                                <div class="accordion-body row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="sound_adapter">Sound
+                                                input</label>
+                                            <select class="form-control form-select" id="sound_adapter"
+                                                onchange="snd_change()" placeholder="" disabled>
+                                                <option value="placeholder" selected id="snd_ph">Click start first
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="uploader_radio">Uploader
+                                                Radio</label>
+                                            <input class="form-control" id="uploader_radio" placeholder=""
+                                                onchange="saveSettings()">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="dial">Dial Frequency
+                                                (MHz)</label>
+                                            <input class="form-control" id="dial" placeholder=""
+                                                onchange="saveSettings()" type="number" inputmode="decimal">
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                        </form>
+                        </div>
+                        <div class="accordion-item d-none" id="rtlSection">
+                            <h2 class="accordion-header" id="headingRtl">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseRTL" aria-expanded="false" aria-controls="collapseThree">
+                                    RTL SDR Configuration
+                                </button>
+                            </h2>
+                            <div id="collapseRTL" class="accordion-collapse collapse" aria-labelledby="headingRtl"
+                                data-bs-parent="#configAccordion">
+                                <div class="accordion-body row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="rtl_freq">RTL Frequency
+                                                (MHz)</label>
+                                            <input class="form-control" step="0.001" id="rtl_freq" placeholder=""
+                                                onchange="saveSettings();rtlFreq();" type="number" inputmode="decimal"
+                                                value="434.199">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="ppm">RTL PPM frequency
+                                                correction</label>
+                                            <input class="form-control" id="ppm" step="1" placeholder=""
+                                                onchange="saveSettings();updatePPM();" type="number" inputmode="decimal"
+                                                value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="gain">RTL Gain
+                                                (db)</label>
+                                            <div class="row">
+                                                <input type="range" class="form-range " min="-0.5" max="50" step="0.5"
+                                                    value="-0.5" id="gain" oninput="saveSettings(); updateGain();">
+                                            </div>
+                                            <div class="row">
+                                                <input class="form-control" id="gaindb" placeholder=""
+                                                    disabled="disabled" value="3db">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <!-- <label class="form-label col-form-label">Other settings</label> -->
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rtlaudio"
+                                                    onclick="saveSettings();rtlaudio()"
+                                                    onchange="saveSettings();rtlaudio()">
+                                                <label class="form-check-label " for="rtlaudio">Listen to audio (may be
+                                                    loud)</label>
+
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rtlbiast"
+                                                    onclick="saveSettings();updateBiasT()"
+                                                    onchange="saveSettings();updateBiasT()">
+                                                <label class="form-check-label " for="rtlbiast">Enable Bias T</label>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" id="horusSection">
+                            <h2 class="accordion-header" id="headingHorus">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseHorus" aria-expanded="false" aria-controls="collapseHorus">
+                                    Horus Binary Configuration
+                                </button>
+                            </h2>
+                            <div id="collapseHorus" class="accordion-collapse collapse" aria-labelledby="headingHorus"
+                                data-bs-parent="#configAccordion">
+                                <div class="accordion-body row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="tone_spacing">Tone
+                                                Spacing</label>
+                                            <input class="form-control" id="tone_spacing" placeholder=""
+                                                onchange="updateToneSpacing()" type="number" inputmode="decimal"
+                                                value="270">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="baud">Baud rate</label>
+                                            <select id="baud" class="form-select" onchange="updateBaudRate()"
+                                                aria-label="Baud Rate">
+                                                <option value="50">50</option>
+                                                <option value="100" selected>100 (default)</option>
+                                                <option value="300">300</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" id="wenetSection">
+                            <h2 class="accordion-header" id="headingWenet">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseWenet" aria-expanded="false" aria-controls="collapseWenet">
+                                    Wenet Configuration
+                                </button>
+                            </h2>
+                            <div id="collapseWenet" class="accordion-collapse collapse" aria-labelledby="headingWenet"
+                                data-bs-parent="#configAccordion">
+                                <div class="accordion-body row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="col mb-2">
+                                            <label class="form-label col-form-label" for="wenet_version">Wenet
+                                                Version</label>
+                                            <select id="wenet_version" class="form-select" aria-label="Wenet mode"
+                                                onchange="saveSettings();update_wenet();">
+                                                <option value="1">Wenet Traditional (115177 UART)</option>
+                                                <option value="2" selected>Wenet v2 (96000 I2S)</option>
+                                            </select>
+                                            <div id="passwordHelpBlock" class="form-text">
+                                                If unsure or unknown select "Wenet v2"
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+
+                </div>
+
+                <div class="tab-pane justify-content-center" id="frames-tab-pane" role="tabpanel" tabindex="0">
+
+
+
+                    <div id="snr" class="col-md-12 plotlyhack">
+                    </div>
+                    <div class="col-md-12" style="position:relative;">
+
+                        <div id="frames">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane justify-content-center" id="map-tab-pane" role="tabpanel" tabindex="0">
+                    <div class="col-md-12" id="trackMap">
+                    </div>
+                </div>
+
+
+                <div class="tab-pane justify-content-center" id="plots-tab-pane" role="tabpanel" tabindex="0">
+                    <div id="plots" class="col-md-12 plotlyhack">
+                    </div>
+                </div>
+
+                <div class="tab-pane justify-content-center" id="log-tab-pane" role="tabpanel" tabindex="0">
+                    <div class="card">
+                        <div class="card-header">
+                            Payload Data Download
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mb-2">
+                                    <label class="form-label col-form-label" for="log_payload">Payload Name</label>
+                                    <div class="input-group mb-3">
+                                        
+                                        <select id="log_payload" class="form-select form-control" aria-label="Payload Name" onchange="refreshTimes()"></select>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="globalThis.refreshLogCalls()"><b>⟳</b></button>
+                                    </div>
+                                    
+
+                                </div>
+                                <div class="col mb-2">
+
+                              
+                                    <label class="form-label col-form-label" for="log_timeframe">Time frame</label>
+                                    <div class="input-group mb-3">
+                                        
+                                        <select id="log_timeframe" class="form-select form-control" aria-label="Time frame" onchange=""></select>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="globalThis.log_download()">Download</button>
+                                    </div>
+                                    
+
+              
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="rx_log" class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="modal fade" tabindex="-1" id="wizard">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="wizard_title">Configuration Wizard</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <b>Frequency: </b> <span id="wizard_freq">420.69</span><br>
+                                <b>Dial frequency: </b> <span id="wizard_dial_freq">420.69</span><br>
+                                <b>Mode: </b> <span id="wizard_mode">Horus</span><br>
+                                <span id="wizard_tonespacing_enable" class="d-none"><b>Tone spacing: </b> <span
+                                        id="wizard_tonespacing">1</span></span><br>
+                                <span id="wizard_baud_enable" class="d-none"><b>Baud: </b> <span
+                                        id="wizard_baud">1</span></span><br>
+                            </p>
+                            <hr>
+                            <form>
+                                <h6 class="mt-3">Receiver type</h6>
+                                <div class="mb-3">
+                                    <div class="btn-group w-100" role="group"
+                                        aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="wizard_receiver"
+                                            id="wizard_soundcard" autocomplete="off">
+                                        <div class="btn btn-outline-primary dropdown w-50">
+
+                                            <label style="z-index:unset !important" id="wizard_soundcard_label"
+                                                class="dropdown-toggle text-truncate w-100" for="wizard_soundcard"
+                                                data-bs-toggle="dropdown" aria-expanded="false"
+                                                onclick="getWizardSoundDevices()">Sound Card</label>
+                                            <ul class="dropdown-menu" id="wizard_sound_devices">
+                                                <li><a class="dropdown-item" disabled>Please click allow on the prompt
+                                                        for
+                                                        microphone access</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <input type="radio" class="btn-check" name="wizard_receiver" id="wizard_rtlsdr"
+                                            autocomplete="off" disabled onclick="setWizardRTL()">
+                                        <label style="z-index:unset !important" class="btn btn-outline-primary"
+                                            for="wizard_rtlsdr">RTL-SDR</label>
+                                    </div>
+                                    <div class="alert alert-danger mt-3 d-none" role="alert" id="wizard_no_usb">
+                                        This browser does not support USB. Wenet cannot only be received using an
+                                        RTL-SDR via USB. Try a Chrome/Chromium based browser.
+                                    </div>
+                                </div>
+                                <div id="wizard_hidden" class="d-none">
+                                    <hr>
+                                    <h6 class="mt-3">Radio configuration</h6>
+                                    <p id="wizard_instructions">Set your radio to ....</p>
+                                    <div id="wizard_rtl_config" class="d-none mb-3">
+                                        <p>If unsure, leave PPM as 0, Bias-T as disabled and gain set to Auto (all the
+                                            way
+                                            to
+                                            the left)</p>
+                                        <div class="alert alert-warning d-none" role="alert"
+                                            id="wizard_windows_warning">
+                                            Windows users require a one time driver setup for the RTL-SDR to work
+                                            correctly. Follow <a
+                                                href="https://github.com/projecthorus/webhorus/wiki/Web-wenet-Tutorial#windows-users">this
+                                                guide to configure the correct drivers.</a>
+                                        </div>
+                                        <div class="alert alert-warning d-none" role="alert" id="wizard_linux_warning">
+                                            Linux users may require unloading the DVB drivers before RTL-SDR will work
+                                            correctly in the browser. Follow <a
+                                                href="https://github.com/projecthorus/webhorus/wiki/Web-wenet-Tutorial#linux-users">this
+                                                guide to ensure DVB drivers are unloaded.</a>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="input-group">
+                                                <div class="input-group-text" for="wizard_ppm">PPM frequency
+                                                    correction</div>
+                                                <input class="form-control" id="wizard_ppm" step="1" placeholder=""
+                                                    type="number" inputmode="decimal" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="input-group">
+                                                <div class="input-group-text " for="wizard_gain">Gain
+                                                    (db)</div>
+
+                                                <input id="wizard_gaindb" class="form-control " placeholder=""
+                                                    disabled="disabled" value="3db">
+
+                                                <input type="range" class="form-range form-control w-50" min="-0.5"
+                                                    max="50" step="0.5" value="-0.5" id="wizard_gain"
+                                                    style="height: auto; padding-left:8px;padding-right:8px;"
+                                                    oninput="wizardUpdateGain();">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-auto">
+                                                <input class="form-check-input" type="checkbox" id="wizard_rtlbiast">
+                                                <label class="form-check-label " for="wizard_rtlbiast">Enable Bias
+                                                    T</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+
+                                    <div class="accordion" id="accordionWizardUploader">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="wizard_upload_info_heading">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#wizardUpInfo"
+                                                    aria-expanded="true" aria-controls="wizardUpInfo">
+                                                    Your station information (optional)
+                                                </button>
+                                            </h2>
+                                            <div id="wizardUpInfo" class="accordion-collapse collapse "
+                                                aria-labelledby="wizard_upload_info_heading"
+                                                data-bs-parent="#accordionWizardUploader">
+                                                <div class="accordion-body">
+
+                                                    <div class="mb-3">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text" for="wizard_callsign">
+                                                                Callsign
+                                                            </div>
+                                                            <input type="text" onkeyup="validateWizard()"
+                                                                onkeypress="validateWizard()"
+                                                                onchange="validateWizard()" class="form-control"
+                                                                id="wizard_callsign"
+                                                                placeholder="N0CALL (does not have to be a real callsign)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text" for="wizard_antenna">Antenna
+                                                            </div>
+                                                            <input type="text" class="form-control" id="wizard_antenna"
+                                                                placeholder="3 dbi omni (optional)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-4  mb-2">
+                                                            <div class="input-group">
+                                                                <div class="input-group-text" for="wizard_uploader_lat">
+                                                                    Lat
+                                                                </div>
+                                                                <input class="form-control" id="wizard_uploader_lat"
+                                                                    placeholder="(optional)" type="number"
+                                                                    inputmode="decimal">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#mapPickerModal" onclick="geoload()"
+                                                                    style="padding-top: 0.5px; z-index:unset !important">
+                                                                    &target;
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4  mb-2">
+                                                            <div class="input-group">
+                                                                <div class="input-group-text" for="wizard_uploader_lon">
+                                                                    Lon
+                                                                </div>
+                                                                <input class="form-control" id="wizard_uploader_lon"
+                                                                    placeholder="(optional)" type="number"
+                                                                    inputmode="decimal">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#mapPickerModal" onclick="geoload()"
+                                                                    style="padding-top: 0.5px; z-index:unset !important">
+                                                                    &target;
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-2">
+                                                            <div class="input-group">
+                                                                <div class="input-group-text" for="wizard_uploader_alt">
+                                                                    Alt
+                                                                    (m)</div>
+                                                                <input class="form-control" id="wizard_uploader_alt"
+                                                                    placeholder="(optional)" type="number"
+                                                                    inputmode="decimal" value="0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-2" id="wizard_receiver_model_input">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text" for="wizard_uploader_radio">
+                                                                Receiver model</div>
+                                                            <input class="form-control" id="wizard_uploader_radio"
+                                                                placeholder="eg. Icom IC-7100 (optional)" type="text">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <h6 class="mt-3">Upload configuration</h6>
+                                    <div class="row mb-2">
+                                        <div class="col-auto mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" checked
+                                                    id="wizard_upload_sondehub">
+                                                <label class="form-check-label " for="wizard_upload_sondehub">Balloon
+                                                    data
+                                                    to SondeHub</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-auto mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" checked
+                                                    id="wizard_uploader_position">
+                                                <label class="form-check-label " for="wizard_uploader_position">Upload
+                                                    your
+                                                    position to SondeHub</label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="wizard_start" class="btn btn-primary" disabled
+                                data-bs-dismiss="modal" onclick="saveWizard()">Start</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+
+        <div class="modal fade" id="mapPickerModal" tabindex="-1" aria-labelledby="mapPickerModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mapPickerModalLabel">Select location</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="location_picker">
+
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" id="wizard_start" class="btn btn-primary" disabled
-                            data-bs-dismiss="modal" onclick="saveWizard()">Start</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="saveLocation()">Save
+                            changes</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
-    </main>
-
-    <div class="modal fade" id="mapPickerModal" tabindex="-1" aria-labelledby="mapPickerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mapPickerModalLabel">Select location</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="location_picker">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveLocation()">Save
-                        changes</button>
-                </div>
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted"></span>
             </div>
-        </div>
-    </div>
-
-
-    <footer class="footer">
-        <div class="container">
-            <span class="text-muted"></span>
-        </div>
-    </footer>
-    <script type="module" src="./js/main.js"></script>
+        </footer>
+        <script type="module" src="./js/main.js"></script>
     </div>
     <div id="loading" class="d-flex flex-column min-vh-100 min-vw-100">
         <div class="d-flex flex-grow-1 justify-content-center align-items-center vh-100" id="loading_content">
-        <span id="loadingtext">Loading...</span>
+            <span id="loadingtext">Loading...</span>
         </div>
     </div>
 </body>

@@ -1,7 +1,7 @@
 import struct
 from pyodide.ffi import to_js
 from pyodide.ffi import create_proxy
-from js import document, rx_packet, updateStats, navigator
+from js import document, rx_packet, updateStats, navigator, logData
 import datetime
 from horusdemodlib.decoder import decode_packet
 from horusdemodlib.demod import HorusLib
@@ -86,10 +86,12 @@ def write_audio(data):
 
     if frame and frame.crc_pass and frame.data:
         packet = decode_packet(frame.data)
+        
         if document.getElementById("upload_sondehub").checked:
             sh_format = telem_to_sondehub(
                 packet, sh_meta, check_time=False if packet['payload_id'] == '4FSKTEST-V2' else True)
         else:
             sh_format = None
         rx_packet(packet, sh_format, stuct_to_dict(horus_demod.stats), horus_demod.stats.snr_est)
+        logData(packet['payload_id'], to_js(frame.data), to_js(sh_format), to_js(stuct_to_dict(horus_demod.stats)))
     return to_js(horus_demod.nin)
