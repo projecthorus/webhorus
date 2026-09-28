@@ -42,7 +42,7 @@ export default defineConfig({
                 sourcemap: true,
                 hashCharacters: "hex" // base64 causes -_ which python doesn't like parsing in the whl files
             },
-            preserveEntrySignatures: true
+            preserveEntrySignatures: "strict"
         },
         sourcemap: true
     },
