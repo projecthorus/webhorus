@@ -7,32 +7,28 @@ import prebundleWorkers from "vite-plugin-prebundle-workers";
 import { readFile, writeFile } from "fs";
 
 export default defineConfig({
-    esbuild: {
-        supported: {
-          'top-level-await': true //browsers can handle top-level-await features
-        },
-    },
+
     worker: {
         format: "es"
       },
-    root: resolve(__dirname, 'src'),
+    root: resolve(import.meta.dirname, 'src'),
     server: {
         host: '0.0.0.0'
     },
     assetsInclude: ["**/*.whl", "**/*.zip", "**/*.wasm","pyodide/pyodide-lock.json"],
     resolve: {
         alias: {
-            '~whl': resolve(__dirname,"src/whl"),
-            '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
-            '~leaflet': resolve(__dirname, 'node_modules/leaflet'),
-            '~radioreceiver': resolve(__dirname, 'node_modules/radioreceiver'),
+            '~whl': resolve(import.meta.dirname,"src/whl"),
+            '~bootstrap': resolve(import.meta.dirname, 'node_modules/bootstrap'),
+            '~leaflet': resolve(import.meta.dirname, 'node_modules/leaflet'),
+            '~radioreceiver': resolve(import.meta.dirname, 'node_modules/radioreceiver'),
         }
     },
     css: {
         preprocessorOptions: {
             scss: {
                 api: 'modern-compiler', // or "modern"
-                silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import']
+                silenceDeprecations: [ 'color-functions', 'global-builtin', 'import', 'if-function']
             }
         }
     },
@@ -44,17 +40,14 @@ export default defineConfig({
             output: {
                 'preserveModulesRoot': 'src',
                 sourcemap: true,
+                hashCharacters: "hex" // base64 causes -_ which python doesn't like parsing in the whl files
             },
-            preserveEntrySignatures: true
+            preserveEntrySignatures: "strict"
         },
         sourcemap: true
     },
     optimizeDeps: {
-        esbuildOptions: {
-            define: {
-                global: 'globalThis'
-            },
-        }
+
     },
     plugins: [
         {
@@ -92,7 +85,7 @@ export default defineConfig({
                 registerType: 'autoUpdate',
                 injectRegister: 'auto',
                 devOptions: {
-                    enabled: true,
+                    enabled: false,
                     type: 'module',
                 },
                 workbox: {

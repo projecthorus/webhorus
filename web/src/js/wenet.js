@@ -240,6 +240,13 @@ function start_wenet() {
                 });
                 return
             }
+
+            if (event.data.raw){
+                if (last_callsign) {
+                    globalThis.logData(last_callsign,event.data.raw, event.data.sondehub_data)
+                }
+            }
+
             if (event.data.type == "image") {
                 addImage(...event.data.args)
                 return
@@ -351,6 +358,9 @@ function start_wenet() {
                         }
                     }
                 )
+                return
+            }
+            if (event.data.type == "debug"){
                 return
             }
             console.error("Unhandled message")
