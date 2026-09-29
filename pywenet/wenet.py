@@ -73,7 +73,7 @@ class Wenet():
                         if self.current_packet_count > 0:
 
                             image_output = self.img_data.image
-                            return_image = ["image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
+                            return_image = [packet, "image", [image_output, self.current_callsign, self.current_image, self.upload_buffer]]
                             
                             self.img_data = SSDV()
                         else:
@@ -99,4 +99,4 @@ class Wenet():
                     if return_image:
                         return return_image
                 else:
-                    [packet, "debug"]
+                    return [packet, "debug"]
