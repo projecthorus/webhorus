@@ -1602,7 +1602,7 @@ request.onupgradeneeded = (event) => {
   }
 };
 
-globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats){
+globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats, text){
     if (db){
         const logObjectStore = db.transaction("logs", "readwrite").objectStore("logs");
         logObjectStore.add({
@@ -1610,7 +1610,8 @@ globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats){
             "date": (new Date()).getTime(),
             "data": raw_data,
             "sondehub": sondehub_data,
-            "modem_stats": modem_stats
+            "modem_stats": modem_stats,
+            "text": text
         })
     }
 }

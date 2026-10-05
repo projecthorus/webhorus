@@ -243,7 +243,7 @@ function start_wenet() {
 
             if (event.data.raw){
                 if (last_callsign) {
-                    globalThis.logData(last_callsign,event.data.raw, event.data.sondehub_data)
+                    globalThis.logData(last_callsign,event.data.raw, event.data.sondehub_data, event.data.text)
                 }
             }
 

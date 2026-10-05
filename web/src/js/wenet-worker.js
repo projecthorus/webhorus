@@ -88,21 +88,21 @@ self.onmessage = async (event) => {
 
     for (const element of wenet_returns.toJs({ dict_converter: Object.fromEntries })) {
         let sondehub_data;
-        if (element[1] == "gps") {
-            const sh_gps_data = structuredClone(element[2])
+        if (element[2] == "gps") {
+            const sh_gps_data = structuredClone(element[3])
             sh_gps_data.time_received = new Date().toISOString()
             gps_data.push(sh_gps_data)
             sondehub_data = format_sh(sh_gps_data)
         }
-        self.postMessage({ "type": element[1], "args": element[2], "raw": element[0], "sondehub_data": sondehub_data })
+        self.postMessage({ "type": element[2], "args": element[3], "raw": element[0], "sondehub_data": sondehub_data, "text": element[1] })
 
         // upload ssdv images
-        if (element[1] == "image") { // posting to ssdv
-            payload_callsign = element[2][1]
+        if (element[2] == "image") { // posting to ssdv
+            payload_callsign = element[3][1]
             if (event.data.sh) {
                 var ssdv_payload = {
                     "type": "packets",
-                    "packets": element[2][3].map((x) => {
+                    "packets": element[3][3].map((x) => {
                         return {
                             "type": "packet",
                             "packet": x,
