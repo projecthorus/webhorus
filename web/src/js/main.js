@@ -1577,30 +1577,44 @@ globalThis.updateZScaleFromBuffer = function() {
 
 
 // storage
-let db;
+var db;
 let objectStore;
-const request = indexedDB.open("data", 3);
+const db_ver = 3;
+const db_name = "data"
+var request = indexedDB.open(db_name, db_ver);
 
-request.onerror = (event) => {
-  log_entry(`Received user location`, "danger")
-};
-request.onsuccess = (event) => {
-  db = event.target.result;
-};
 
-request.onupgradeneeded = (event) => {
-  // Save the IDBDatabase interface
-  const db = event.target.result;
+function dbsetup(){
+    request.onerror = (event) => {
+        log_entry(`Received user location`, "danger")
+    };
+    request.onsuccess = (event) => {
+    db = event.target.result;
 
-  // Create an objectStore for this database
-  objectStore = db.createObjectStore("logs", { autoIncrement: true });
-  objectStore.createIndex("callsign", "callsign", { unique: false });
-  objectStore.createIndex("date", "date", { unique: false });
+    db.addEventListener("versionchange", () => {
+        db.close();
+    });
+    
+    globalThis.refreshDataSize();
+    globalThis.refreshLogCalls();
+    };
 
-  objectStore.transaction.oncomplete = (event) => {
-    log_entry(`Database upgraded`, "light")
-  }
-};
+
+    request.onupgradeneeded = (event) => {
+    // Save the IDBDatabase interface
+    db = event.target.result;
+
+    // Create an objectStore for this database
+    objectStore = db.createObjectStore("logs", { autoIncrement: true });
+    objectStore.createIndex("callsign", "callsign", { unique: false });
+    objectStore.createIndex("date", "date", { unique: false });
+
+    objectStore.transaction.oncomplete = (event) => {
+        log_entry(`Database upgraded`, "light")
+    }
+    };
+}
+dbsetup();
 
 globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats, text){
     if (db){
@@ -1613,9 +1627,38 @@ globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats, te
             "modem_stats": modem_stats,
             "text": text
         })
+        globalThis.refreshDataSize(); 
     }
 }
 
+
+globalThis.refreshDataSize = function() {
+    navigator.storage.estimate().then((x)=>{
+        const storagediv = document.getElementById("storage")
+        const storagetext = document.getElementById("storagetext")
+        const percentage = (x.usage / x.quota) * 100
+        storagediv.style.width=`${(percentage).toFixed(2)}%`
+        storagediv.ariaValueNow = (percentage).toFixed(2)
+        storagetext.innerText = `${(percentage).toFixed(2)}% storage used`
+    })
+
+}
+
+globalThis.logs_delete = function(){
+    if (db){
+        const ddb = indexedDB.deleteDatabase("data")
+        ddb.onerror = function(x){
+            console.log(x)
+        }
+        ddb.onsuccess = function(){
+            log_entry(`Payload logs deleted`, "danger")
+
+            request = indexedDB.open(db_name, db_ver);  
+            dbsetup();
+           
+        }
+    }
+}
 
 globalThis.refreshLogCalls = function(){
     db.transaction("logs","readonly")
@@ -1692,7 +1735,7 @@ globalThis.log_download = function() {
     .getAll(callsign)
     .onsuccess = function(result){
         var results = result.target.result.filter((x)=>{
-            if (x.date > from && x.date < to){
+            if (x.date >= from && x.date <= to){
                 return true
             }
             return false
