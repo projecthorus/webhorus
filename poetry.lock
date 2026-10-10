@@ -2,22 +2,81 @@
 
 [[package]]
 name = "asn1tools"
-version = "0.167.0"
+version = "0.165.0"
 description = "ASN.1 parsing, encoding and decoding."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "asn1tools-0.167.0.tar.gz", hash = "sha256:cad53f6f6d788a6eec5e37543401cd8c39f138cc8016b64629ec29fb4735f5b2"},
+    {file = "asn1tools-0.165.0.tar.gz", hash = "sha256:2fa63d8045d0daa2cd48855aafd39ac19681f93eb2f395319cfe6c745eac5216"},
 ]
 
 [package.dependencies]
 bitstruct = "*"
-pyparsing = ">=3.1.2"
+pyparsing = ">=3.0.6"
 
 [package.extras]
 cache = ["diskcache"]
 shell = ["prompt_toolkit"]
+
+[[package]]
+name = "audioop-lts"
+version = "0.2.2"
+description = "LTS Port of Python audioop"
+optional = false
+python-versions = ">=3.13"
+groups = ["main"]
+files = [
+    {file = "audioop_lts-0.2.2-cp313-abi3-macosx_10_13_universal2.whl", hash = "sha256:fd3d4602dc64914d462924a08c1a9816435a2155d74f325853c1f1ac3b2d9800"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-macosx_10_13_x86_64.whl", hash = "sha256:550c114a8df0aafe9a05442a1162dfc8fec37e9af1d625ae6060fed6e756f303"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-macosx_11_0_arm64.whl", hash = "sha256:9a13dc409f2564de15dd68be65b462ba0dde01b19663720c68c1140c782d1d75"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl", hash = "sha256:51c916108c56aa6e426ce611946f901badac950ee2ddaf302b7ed35d9958970d"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:47eba38322370347b1c47024defbd36374a211e8dd5b0dcbce7b34fdb6f8847b"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:ba7c3a7e5f23e215cb271516197030c32aef2e754252c4c70a50aaff7031a2c8"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:def246fe9e180626731b26e89816e79aae2276f825420a07b4a647abaa84becc"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:e160bf9df356d841bb6c180eeeea1834085464626dc1b68fa4e1d59070affdc3"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:4b4cd51a57b698b2d06cb9993b7ac8dfe89a3b2878e96bc7948e9f19ff51dba6"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-musllinux_1_2_ppc64le.whl", hash = "sha256:4a53aa7c16a60a6857e6b0b165261436396ef7293f8b5c9c828a3a203147ed4a"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-musllinux_1_2_riscv64.whl", hash = "sha256:3fc38008969796f0f689f1453722a0f463da1b8a6fbee11987830bfbb664f623"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-musllinux_1_2_s390x.whl", hash = "sha256:15ab25dd3e620790f40e9ead897f91e79c0d3ce65fe193c8ed6c26cffdd24be7"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:03f061a1915538fd96272bac9551841859dbb2e3bf73ebe4a23ef043766f5449"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-win32.whl", hash = "sha256:3bcddaaf6cc5935a300a8387c99f7a7fbbe212a11568ec6cf6e4bc458c048636"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-win_amd64.whl", hash = "sha256:a2c2a947fae7d1062ef08c4e369e0ba2086049a5e598fda41122535557012e9e"},
+    {file = "audioop_lts-0.2.2-cp313-abi3-win_arm64.whl", hash = "sha256:5f93a5db13927a37d2d09637ccca4b2b6b48c19cd9eda7b17a2e9f77edee6a6f"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-macosx_10_13_universal2.whl", hash = "sha256:73f80bf4cd5d2ca7814da30a120de1f9408ee0619cc75da87d0641273d202a09"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-macosx_10_13_x86_64.whl", hash = "sha256:106753a83a25ee4d6f473f2be6b0966fc1c9af7e0017192f5531a3e7463dce58"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:fbdd522624141e40948ab3e8cdae6e04c748d78710e9f0f8d4dae2750831de19"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl", hash = "sha256:143fad0311e8209ece30a8dbddab3b65ab419cbe8c0dde6e8828da25999be911"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:dfbbc74ec68a0fd08cfec1f4b5e8cca3d3cd7de5501b01c4b5d209995033cde9"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:cfcac6aa6f42397471e4943e0feb2244549db5c5d01efcd02725b96af417f3fe"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:752d76472d9804ac60f0078c79cdae8b956f293177acd2316cd1e15149aee132"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:83c381767e2cc10e93e40281a04852facc4cd9334550e0f392f72d1c0a9c5753"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-musllinux_1_2_aarch64.whl", hash = "sha256:c0022283e9556e0f3643b7c3c03f05063ca72b3063291834cca43234f20c60bb"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-musllinux_1_2_ppc64le.whl", hash = "sha256:a2d4f1513d63c795e82948e1305f31a6d530626e5f9f2605408b300ae6095093"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-musllinux_1_2_riscv64.whl", hash = "sha256:c9c8e68d8b4a56fda8c025e538e639f8c5953f5073886b596c93ec9b620055e7"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-musllinux_1_2_s390x.whl", hash = "sha256:96f19de485a2925314f5020e85911fb447ff5fbef56e8c7c6927851b95533a1c"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:e541c3ef484852ef36545f66209444c48b28661e864ccadb29daddb6a4b8e5f5"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-win32.whl", hash = "sha256:d5e73fa573e273e4f2e5ff96f9043858a5e9311e94ffefd88a3186a910c70917"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-win_amd64.whl", hash = "sha256:9191d68659eda01e448188f60364c7763a7ca6653ed3f87ebb165822153a8547"},
+    {file = "audioop_lts-0.2.2-cp313-cp313t-win_arm64.whl", hash = "sha256:c174e322bb5783c099aaf87faeb240c8d210686b04bd61dfd05a8e5a83d88969"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-macosx_10_13_universal2.whl", hash = "sha256:f9ee9b52f5f857fbaf9d605a360884f034c92c1c23021fb90b2e39b8e64bede6"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-macosx_10_13_x86_64.whl", hash = "sha256:49ee1a41738a23e98d98b937a0638357a2477bc99e61b0f768a8f654f45d9b7a"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-macosx_11_0_arm64.whl", hash = "sha256:5b00be98ccd0fc123dcfad31d50030d25fcf31488cde9e61692029cd7394733b"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl", hash = "sha256:a6d2e0f9f7a69403e388894d4ca5ada5c47230716a03f2847cfc7bd1ecb589d6"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:f9b0b8a03ef474f56d1a842af1a2e01398b8f7654009823c6d9e0ecff4d5cfbf"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:2b267b70747d82125f1a021506565bdc5609a2b24bcb4773c16d79d2bb260bbd"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:0337d658f9b81f4cd0fdb1f47635070cc084871a3d4646d9de74fdf4e7c3d24a"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:167d3b62586faef8b6b2275c3218796b12621a60e43f7e9d5845d627b9c9b80e"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-musllinux_1_2_aarch64.whl", hash = "sha256:0d9385e96f9f6da847f4d571ce3cb15b5091140edf3db97276872647ce37efd7"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-musllinux_1_2_ppc64le.whl", hash = "sha256:48159d96962674eccdca9a3df280e864e8ac75e40a577cc97c5c42667ffabfc5"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-musllinux_1_2_riscv64.whl", hash = "sha256:8fefe5868cd082db1186f2837d64cfbfa78b548ea0d0543e9b28935ccce81ce9"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-musllinux_1_2_s390x.whl", hash = "sha256:58cf54380c3884fb49fdd37dfb7a772632b6701d28edd3e2904743c5e1773602"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:088327f00488cdeed296edd9215ca159f3a5a5034741465789cad403fcf4bec0"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-win32.whl", hash = "sha256:068aa17a38b4e0e7de771c62c60bbca2455924b67a8814f3b0dee92b5820c0b3"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-win_amd64.whl", hash = "sha256:a5bf613e96f49712073de86f20dbdd4014ca18efd4d34ed18c75bd808337851b"},
+    {file = "audioop_lts-0.2.2-cp314-cp314t-win_arm64.whl", hash = "sha256:b492c3b040153e68b9fdaff5913305aaaba5bb433d8a7f73d5cf6a64ed3cc1dd"},
+    {file = "audioop_lts-0.2.2.tar.gz", hash = "sha256:64d0c62d88e67b98a1a5e71987b7aa7b5bcffc7dcee65b635823dbdd0a8dbbd0"},
+]
 
 [[package]]
 name = "bitstruct"
@@ -458,6 +517,78 @@ files = [
 ]
 
 [[package]]
+name = "horusdemodlib"
+version = "0.6.2"
+description = "Project Horus HAB Telemetry Demodulators"
+optional = false
+python-versions = "<4.0,>=3.9"
+groups = ["main"]
+files = [
+    {file = "horusdemodlib-0.6.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:10203d2b242201d144579d13534b55891b2b4aa9cc55ebdd1ead7da28687d2e6"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:8b27709571fb3d67f75536326c3e7bd8d3b823809ef0f97ac28d48309e4f2dc2"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:797bf383fe2fbe838ddb15317fbbd97372f68fcb84e21894e9883c729a864011"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:d0e398ffa21cc0b4a3b8c7dedfcf40f4ae9e691f754510a14c7f44cf8ce36e7f"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:4ea6c94a5e21f7e2b25186196b7597aa9d6ad145b20c951db7c165b851cd4194"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:d5bf02b8e22d4d729621defdcfe01ddea982800de6a6b5753fa270edf60f6cde"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-musllinux_1_2_armv7l.whl", hash = "sha256:91bd920b6584a71c19c1bde705869169300ac078cd77b9cf60aff41adb0f5731"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:bc03b983cd34b3fd4cf16ace707d48f4f2a91eb9b55914f9f7f51ef673c14288"},
+    {file = "horusdemodlib-0.6.2-cp310-cp310-win_amd64.whl", hash = "sha256:446f3100f8295778df25935573d7ca03f115b3bfa571c9e07c8b846046cc03da"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:f54dc236dfaeb5820b47d4a1a832bd8ecab7a7e15a8e2ac5f46040c84e9dc5c8"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:f5c69845f26a57b4f877c2f5b6b114cf648904ee779b1dce931cdf54e8a0af0b"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:a75c2d0f943325336a3d89042bab3d8b0bb3eb27c71529a52eb267a97dae0842"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:f79141ce5a96508e9aa382872d06e1dbab5b9a5725444c6458727afc23687b1d"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:1eeec5987f478d16f86e618fda8a63aa192372c4ef6bb77d39552e02604fa7bc"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:bd1e27dd60d3d6ce886f1c4798e67ba10e4b378d5aa1761307caa2352aca9fb5"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-musllinux_1_2_armv7l.whl", hash = "sha256:dc3ea210de376e5aec08588a896db03c9873d4777aa52c9b3c0716dc08e4e760"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:e9fb69a796ac49cb6d6165f6cd5e3d753a28c82f3a54b0bbe38fe417acc6f888"},
+    {file = "horusdemodlib-0.6.2-cp311-cp311-win_amd64.whl", hash = "sha256:97378fa616068851d09a11df43ba9045493f00492e6f56bfb7e76a9431667700"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:ab20997d8c6e08fdc3e30f6fe747247837118a039f436eef34808a06149fcbe1"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:3291ba7bb82aba3a5a6e1d5f225696ef35ac6ac6e9b2b96d1107ce1d19f9b8ce"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:35802c37c33feaf6552bee48aac4c7e626eb2c4ed182ad5ea4dd917bec417bf5"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:f88643f6f5cef34fe28dd4721d5b6189a0c51f946cc53c45dfb49b5799a48878"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c25548c2c83390f6d34461f90d7327fc3a1176bd34d3ee59918b84d98212453e"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:08f2f09efb6af58ccee385990d80f2ff381957290c3e12ef8390f4ae9402d769"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-musllinux_1_2_armv7l.whl", hash = "sha256:7b831022603ef4d859f0f8b327331cef1bb2a330199c9ec93bd31c647d2e3105"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:ab1d35fe29d1901995697bb25d95a0804430640a2dc05f8119d950ca35d4981b"},
+    {file = "horusdemodlib-0.6.2-cp312-cp312-win_amd64.whl", hash = "sha256:e5f09de760856d8615fd6763b37d471960af12da5e85cfa9badfdc1e61b9324e"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:3e8bfff7f0204393ceba9f44506ea25040c43e48ec3504e1e83cd48a34aed9b8"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:1c8e2efccdb03f4e9460c519a88a98bace46f71268e196a654be63fbf21927fa"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:52ec44536e980ff608ec4e5f9d2670381e37c168fdb7c4872b561717395a6287"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:39b3e5965660f3a9dd5b8ed1d09d1780487b860e7da58ce4a72a0824cbbcb010"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e690f8112bbecade36e6194fe439578ea5d06a99f7870fcb9b2b7edde39d77e5"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:0e9e53d742b5fa797e769f2ec2a20bb587fe586bb9909e3852e6fbbeba2f0dcd"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-musllinux_1_2_armv7l.whl", hash = "sha256:bc694ea6b821785faa59031d36be1792417e358c61cb65f0ba82e36022baa99b"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:1a3edff375446ed83e6dcb2a2810ed39368f71fe822b76d94974412521c00d48"},
+    {file = "horusdemodlib-0.6.2-cp313-cp313-win_amd64.whl", hash = "sha256:7dfb65e40485bae3f3a34783e33c70fbaa8fddbbc277979c8e32eb3b1804bd23"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-macosx_10_15_x86_64.whl", hash = "sha256:302746da9094fcd3976b759f2835b05e141c69345aa377a0e8f917e46b6b24a1"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:d58512963ecc0c3be46953658a98a3dcb8cfa5106c96b74762cddc702af47c9d"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:45e6f7c27606a538bb490dc0be3a67bd56b01ce48409e58f62109a80271c1c17"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:ccd9b56a413dab801d78b0a1cb328866c0937bb31087f886025fe959b893782d"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:4191ce73c0cec6b43bde0a3a33d58675d991e1cdd60b7d6445382a48b05d8b28"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:74f34d49b1f74378f65a3fb901b615811aeba9ced462467128cc3d2382b21212"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-musllinux_1_2_armv7l.whl", hash = "sha256:e534039a80749fe208093032cc3cf7865638ecf90dc7e19dff39c1cd5190cb76"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:4482e357b2312fd385dcc6e697d75d30c7deea05c33f3aa18ddc81b557527c3e"},
+    {file = "horusdemodlib-0.6.2-cp314-cp314-win_amd64.whl", hash = "sha256:f61f9b8f746ee465279f70fac3ae89422aa3e2ce7be0f672888e59e25425a894"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:a36386d2c51f924a0f586ea97255755e8dc2bc42ca6f002391a0ce0259a43443"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:b2d0e4de0f328758797be6789b290349775192a0774ebdca0e9e4868aa14c43b"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:57809e42710bc1640784f480f794d10427a7bee002d965d9b62579c01913112f"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:d4c2f543e35e721b6848b6558a5896445e916ffc0d370ee59c52e67b85782e2c"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cddee73dfb57ca71156cc30e88e14b4d7b5407c82143deb39e281c3a26cab2c8"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-musllinux_1_2_aarch64.whl", hash = "sha256:4b47245cae519b77dd30e3e9946ff46e2bfdcf3240399fa9a06cfab227c53493"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-musllinux_1_2_armv7l.whl", hash = "sha256:0d2b0afe9d09b6109915ca75763ed7c854bca6e49dd1bca4e3382ebf5a759f28"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:53f383b004c124c745e2e4d9c5779eb414813fb33f660dc012224054af5e465e"},
+    {file = "horusdemodlib-0.6.2-cp39-cp39-win_amd64.whl", hash = "sha256:a5855df945dadab4ef38003cbc96a719c2dfc5ac9226ba88db21187d8b9db860"},
+    {file = "horusdemodlib-0.6.2.tar.gz", hash = "sha256:d1eab6cbf65f110df1a997508d86c753be3dce99eee8935af8b0267077fce498"},
+]
+
+[package.dependencies]
+asn1tools = ">=0.165.0,<0.166.0"
+audioop-lts = {version = "*", markers = "python_version >= \"3.13\" and python_version < \"4.0\""}
+cffi = ">1.14.0"
+python-dateutil = ">=2.8,<3.0"
+requests = ">=2.25.1,<3.0.0"
+
+[[package]]
 name = "idna"
 version = "3.20"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -559,14 +690,14 @@ type = ["importlib_metadata (>=7.0.2) ; python_version < \"3.10\"", "jaraco.deve
 
 [[package]]
 name = "six"
-version = "1.17.0"
+version = "1.5.0"
 description = "Python 2 and 3 compatibility utilities"
 optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"},
-    {file = "six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"},
+    {file = "six-1.5.0-py2.py3-none-any.whl", hash = "sha256:7ba77770fedd5b84d6c67283912cad39856b5532dc1beb76182ccacee9ec41e0"},
+    {file = "six-1.5.0.tar.gz", hash = "sha256:9fa05de9aa4e0042767dd666ce4905a097306b6291148e958162c4ca0b52d16d"},
 ]
 
 [[package]]
@@ -590,4 +721,4 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "4df26447ac710395f5d31bf73cf8b447341e0eb1b635712baf65192e3b1b3e4e"
+content-hash = "ed8f694414539e415d48e3a776858c54bd69fd898bf0f7035f2e4f0061d26181"

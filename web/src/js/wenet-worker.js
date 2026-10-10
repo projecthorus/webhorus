@@ -87,15 +87,22 @@ self.onmessage = async (event) => {
     const wenet_returns = write_wenet(event.data.buffer)
 
     for (const element of wenet_returns.toJs({ dict_converter: Object.fromEntries })) {
-        self.postMessage({ "type": element[0], "args": element[1] })
+        let sondehub_data;
+        if (element[2] == "gps") {
+            const sh_gps_data = structuredClone(element[3])
+            sh_gps_data.time_received = new Date().toISOString()
+            gps_data.push(sh_gps_data)
+            sondehub_data = format_sh(sh_gps_data)
+        }
+        self.postMessage({ "type": element[2], "args": element[3], "raw": element[0], "sondehub_data": sondehub_data, "text": element[1] })
 
         // upload ssdv images
-        if (element[0] == "image") { // posting to ssdv
-            payload_callsign = element[1][1]
+        if (element[2] == "image") { // posting to ssdv
+            payload_callsign = element[3][1]
             if (event.data.sh) {
                 var ssdv_payload = {
                     "type": "packets",
-                    "packets": element[1][3].map((x) => {
+                    "packets": element[3][3].map((x) => {
                         return {
                             "type": "packet",
                             "packet": x,
@@ -114,79 +121,77 @@ self.onmessage = async (event) => {
                 })
             }
         }
-        if (element[0] == "gps") {
-            const sh_gps_data = structuredClone(element[1])
-            sh_gps_data.time_received = new Date().toISOString()
-            gps_data.push(sh_gps_data)
-        }
     }
     self.postMessage({ "type": "time", "time": event.data.time })
 
 };
+
+function format_sh(gps_data) {
+    var sh_payload = structuredClone(sh_config)
+
+    sh_payload.payload_callsign = payload_callsign + "-Wenet"
+    sh_payload.datetime = gps_data['timestamp'] + "Z"
+    sh_payload.lat = +gps_data['latitude'].toFixed(6)
+    sh_payload.lon = +gps_data['longitude'].toFixed(6)
+    sh_payload.alt = +gps_data['altitude'].toFixed(1)
+    sh_payload.sats = gps_data['numSV']
+    sh_payload.heading = +gps_data['heading'].toFixed(1)
+    sh_payload.modulation = "Wenet"
+    sh_payload.time_received = gps_data['time_received']
+    if (snr) {
+        sh_payload.snr = snr
+    }
+
+    if (f_est){
+        sh_payload.frequency = ((((freq  + f_est[0]) + (freq  + f_est[1]))/2)/1000/1000)
+    }
+    sh_payload.ascent_rate = +gps_data['ascent_rate'].toFixed(1)
+    sh_payload.speed = +gps_data['ground_speed'].toFixed(1)
+    if ("radio_temp" in gps_data && gps_data['radio_temp'] > -999.0) {
+        sh_payload.radio_temp = gps_data['radio_temp']
+    }
+    if ("cpu_temp" in gps_data && gps_data['cpu_temp'] > -999.0) {
+        sh_payload.cpu_temp = gps_data['cpu_temp']
+    }
+
+    sh_payload.cpu_speed = gps_data['cpu_speed']
+    sh_payload.load_avg_1 = gps_data['load_avg_1']
+    sh_payload.load_avg_5 = gps_data['load_avg_5']
+    sh_payload.load_avg_15 = gps_data['load_avg_15']
+    sh_payload.disk_percent = gps_data['disk_percent']
+
+    if ("lens_position" in gps_data && gps_data['lens_position'] > -999.0) {
+        sh_payload.lens_position = gps_data['lens_position']
+    }
+
+    if ("sensor_temp" in gps_data && gps_data['sensor_temp'] > -999.0) {
+        sh_payload.sensor_temp = gps_data['sensor_temp']
+    }
+
+    if ("focus_fom" in gps_data && gps_data['focus_fom'] > -999.0) {
+        sh_payload.focus_fom = gps_data['focus_fom']
+    }
+
+    // New power telemetry fields, for Wenet QRO shields
+    if ("batt_v" in gps_data && gps_data['batt_v'] > 0){
+        sh_payload.batt_v = gps_data['batt_v']
+    }
+
+    if ("batt_i" in gps_data && gps_data['batt_i'] > 0){
+        sh_payload.batt_i = gps_data['batt_i']
+    }
+
+    if ("aux_temp" in gps_data && gps_data['aux_temp'] > -999.0){
+        sh_payload.aux_temp = gps_data['aux_temp']
+    }
+
+    return sh_payload
+}
+
 const sh_upload = setInterval(() => {
     if (sh_config) {
         if (payload_callsign && gps_data) {
-            const to_sondehub = gps_data.map((gps_data) => {
-                var sh_payload = structuredClone(sh_config)
-
-                sh_payload.payload_callsign = payload_callsign + "-Wenet"
-                sh_payload.datetime = gps_data['timestamp'] + "Z"
-                sh_payload.lat = +gps_data['latitude'].toFixed(6)
-                sh_payload.lon = +gps_data['longitude'].toFixed(6)
-                sh_payload.alt = +gps_data['altitude'].toFixed(1)
-                sh_payload.sats = gps_data['numSV']
-                sh_payload.heading = +gps_data['heading'].toFixed(1)
-                sh_payload.modulation = "Wenet"
-                sh_payload.time_received = gps_data['time_received']
-                if (snr) {
-                    sh_payload.snr = snr
-                }
-
-                if (f_est){
-                    sh_payload.frequency = ((((freq  + f_est[0]) + (freq  + f_est[1]))/2)/1000/1000)
-                }
-                sh_payload.ascent_rate = +gps_data['ascent_rate'].toFixed(1)
-                sh_payload.speed = +gps_data['ground_speed'].toFixed(1)
-                if ("radio_temp" in gps_data && gps_data['radio_temp'] > -999.0) {
-                    sh_payload.radio_temp = gps_data['radio_temp']
-                }
-                if ("cpu_temp" in gps_data && gps_data['cpu_temp'] > -999.0) {
-                    sh_payload.cpu_temp = gps_data['cpu_temp']
-                }
-
-                sh_payload.cpu_speed = gps_data['cpu_speed']
-                sh_payload.load_avg_1 = gps_data['load_avg_1']
-                sh_payload.load_avg_5 = gps_data['load_avg_5']
-                sh_payload.load_avg_15 = gps_data['load_avg_15']
-                sh_payload.disk_percent = gps_data['disk_percent']
-
-                if ("lens_position" in gps_data && gps_data['lens_position'] > -999.0) {
-                    sh_payload.lens_position = gps_data['lens_position']
-                }
-
-                if ("sensor_temp" in gps_data && gps_data['sensor_temp'] > -999.0) {
-                    sh_payload.sensor_temp = gps_data['sensor_temp']
-                }
-
-                if ("focus_fom" in gps_data && gps_data['focus_fom'] > -999.0) {
-                    sh_payload.focus_fom = gps_data['focus_fom']
-                }
-
-                // New power telemetry fields, for Wenet QRO shields
-                if ("batt_v" in gps_data && gps_data['batt_v'] > 0){
-                    sh_payload.batt_v = gps_data['batt_v']
-                }
-
-                if ("batt_i" in gps_data && gps_data['batt_i'] > 0){
-                    sh_payload.batt_i = gps_data['batt_i']
-                }
-
-                if ("aux_temp" in gps_data && gps_data['aux_temp'] > -999.0){
-                    sh_payload.aux_temp = gps_data['aux_temp']
-                }
-
-                return sh_payload
-            })
+            const to_sondehub = gps_data.map((gps_data) => {return format_sh(gps_data)})
             const response = fetch("https://api.v2.sondehub.org/amateur/telemetry", {
                 method: "PUT",
                 headers: {

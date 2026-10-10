@@ -712,7 +712,9 @@ async function add_constraints(constraint) {
             constraint.audio[x] = { "ideal": false }
         }
     }
-    constraint.audio.deviceId = supported_constraints.deviceId
+    constraint.audio.deviceId = {
+         "exact": supported_constraints.deviceId
+    }
 
     return constraint
 }
@@ -934,7 +936,7 @@ globalThis.startAudio = async function (constraint) {
                             document.getElementById("sound_adapter").appendChild(snd_opt)
                         }
                     }
-                    document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId
+                    document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId.exact
                     if (saved_device && device_id_list.includes(saved_device)) {
                         log_entry(`Found saved sound adapter - changing to: ${saved_device}`, "light")
                         document.getElementById("sound_adapter").value = saved_device
@@ -946,7 +948,7 @@ globalThis.startAudio = async function (constraint) {
                 })
             } else {
                 log_entry(`Selecting sound device: ${audio_constraint_filters.audio.deviceId}`, "light")
-                document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId
+                document.getElementById("sound_adapter").value = audio_constraint_filters.audio.deviceId.exact
                 start_microphone(stream);
             }
         })
@@ -1574,6 +1576,190 @@ globalThis.updateZScaleFromBuffer = function() {
 }
 
 
+// storage
+var db;
+let objectStore;
+const db_ver = 3;
+const db_name = "data"
+var request = indexedDB.open(db_name, db_ver);
+
+
+function dbsetup(){
+    request.onerror = (event) => {
+        log_entry(`Received user location`, "danger")
+    };
+    request.onsuccess = (event) => {
+    db = event.target.result;
+
+    db.addEventListener("versionchange", () => {
+        db.close();
+    });
+    
+    globalThis.refreshDataSize();
+    globalThis.refreshLogCalls();
+    };
+
+
+    request.onupgradeneeded = (event) => {
+    // Save the IDBDatabase interface
+    db = event.target.result;
+
+    // Create an objectStore for this database
+    objectStore = db.createObjectStore("logs", { autoIncrement: true });
+    objectStore.createIndex("callsign", "callsign", { unique: false });
+    objectStore.createIndex("date", "date", { unique: false });
+
+    objectStore.transaction.oncomplete = (event) => {
+        log_entry(`Database upgraded`, "light")
+    }
+    };
+}
+dbsetup();
+
+globalThis.logData = function(callsign, raw_data, sondehub_data, modem_stats, text){
+    if (db){
+        const logObjectStore = db.transaction("logs", "readwrite").objectStore("logs");
+        logObjectStore.add({
+            "callsign": callsign,
+            "date": (new Date()).getTime(),
+            "data": raw_data,
+            "sondehub": sondehub_data,
+            "modem_stats": modem_stats,
+            "text": text
+        })
+        globalThis.refreshDataSize(); 
+    }
+}
+
+
+globalThis.refreshDataSize = function() {
+    navigator.storage.estimate().then((x)=>{
+        const storagediv = document.getElementById("storage")
+        const storagetext = document.getElementById("storagetext")
+        const percentage = (x.usage / x.quota) * 100
+        storagediv.style.width=`${(percentage).toFixed(2)}%`
+        storagediv.ariaValueNow = (percentage).toFixed(2)
+        storagetext.innerText = `${(percentage).toFixed(2)}% storage used`
+    })
+
+}
+
+globalThis.logs_delete = function(){
+    if (db){
+        const ddb = indexedDB.deleteDatabase("data")
+        ddb.onerror = function(x){
+            console.log(x)
+        }
+        ddb.onsuccess = function(){
+            log_entry(`Payload logs deleted`, "danger")
+
+            request = indexedDB.open(db_name, db_ver);  
+            dbsetup();
+           
+        }
+    }
+}
+
+globalThis.refreshLogCalls = function(){
+    db.transaction("logs","readonly")
+    .objectStore("logs").index("callsign")
+    .getAll({"direction": "nextunique"})
+    .onsuccess = function(result){
+        var log_payload = document.getElementById("log_payload")
+        log_payload.innerHTML=""
+
+        var tf = document.getElementById("log_timeframe")
+        tf.innerHTML=""
+        
+        // todo add to html
+        result.target.result.map((x)=>{
+            var opt = document.createElement("option")
+            opt.value=x.callsign
+            opt.innerText=x.callsign
+            log_payload.appendChild(opt)
+        })
+        globalThis.refreshTimes();
+    }
+}
+
+globalThis.refreshTimes = function(){
+    var callsign = document.getElementById("log_payload").value
+    var tf = document.getElementById("log_timeframe")
+    tf.innerHTML=""
+    db.transaction("logs","readonly")
+    .objectStore("logs").index("callsign")
+    .getAll(callsign)
+    .onsuccess = function(result){
+
+        const MAX_GAP = 3 * 60 * 60 * 1000 // 3 hours
+
+        var last = 0;
+        var opt
+
+        
+
+        result.target.result.map((x)=>{
+            if (x.date > last + MAX_GAP ){
+                if (opt) { // finish the last set element before making a new one
+                    opt.value = opt.value + "-" + last
+                    opt.innerText=opt.innerText + " - " + new Date(last).toISOString()
+                }
+                opt = document.createElement("option")
+                opt.value=x.date
+                opt.innerText=new Date(x.date).toISOString()
+                tf.appendChild(opt)
+            }
+            last = x.date
+        })
+
+        // Final item
+        if (opt) { // finish the last set element before making a new one
+            opt.value = opt.value + "-" + last
+            opt.innerText=opt.innerText + " - " + new Date(last).toISOString()
+        }
+
+        result.target.result
+        
+    }
+}
+
+globalThis.log_download = function() {
+    var callsign = document.getElementById("log_payload").value
+    var tf = document.getElementById("log_timeframe")
+
+    var from = Number(tf.value.split("-")[0])
+    var to = Number(tf.value.split("-")[1])
+
+    db.transaction("logs","readonly")
+    .objectStore("logs").index("callsign")
+    .getAll(callsign)
+    .onsuccess = function(result){
+        var results = result.target.result.filter((x)=>{
+            if (x.date >= from && x.date <= to){
+                return true
+            }
+            return false
+        }).map((x)=>{
+            if (x.data){
+                x.data = x.data.toBase64()
+            }
+            return x
+        })
+
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(results)));
+        element.setAttribute('download', callsign + "-" + new Date(from).toISOString()+ "-" + new Date(to).toISOString()+".json");
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+}
+
+
 globalThis.loadSettings();
 
 
@@ -1582,3 +1768,5 @@ settings_loaded = true
 loadMapPicker()
 loadTrackMap()
 init_python();
+
+
